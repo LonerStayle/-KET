@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:ket/Embassy.dart';
-import 'package:ket/Home.dart';
-import 'package:ket/HotPlace.dart';
+import 'package:ket/main_bottom/embassy.dart';
+import 'package:ket/main_bottom/home.dart';
+import 'package:ket/main_bottom/hotPlace.dart';
+import 'package:ket/ui_theme/KetColorStyle.dart';
+import 'package:ket/ui_theme/KetTextStyle.dart';
+
 
 
 void main() {
@@ -30,20 +33,15 @@ class Main extends StatefulWidget {
 }
 
 class _MainState extends State<Main> {
-  int _selectedIndex = 0; // 선택된 페이지의 인덱스 넘버 초기화
-
-  static const TextStyle optionStyle = TextStyle(
-      fontSize: 30,
-      fontWeight: FontWeight.bold
-  ); // 텍스트 스타일 지정이므로 해당 부분은 제거해도 된다.
+  int _selectedIndex = 1;
 
   final List<Widget> _widgetOptions = <Widget>[
-    Home(),
-    HotPlace(),
-    Embassy(),
-  ]; // 3개의 페이지를 연결할 예정이므로 3개의 페이지를 여기서 지정해준다. 탭 레이아웃은 3개.
+    const HotPlace(),
+    const Home(),
+    const Embassy(),
+  ];
 
-  void _onItemTapped(int index) { // 탭을 클릭했을떄 지정한 페이지로 이동
+  void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
@@ -52,17 +50,34 @@ class _MainState extends State<Main> {
   @override
   Widget build(BuildContext context) {
 
-    return const Scaffold(
-      body: Center(
-        child: Column(
+    return Scaffold(
+      body: SafeArea(
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
 
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-          ],
-        ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: SizedBox.shrink(),
+            label: 'FOOD',
+          ),
+          BottomNavigationBarItem(
+            icon: SizedBox.shrink(),
+            label: 'HOME',
+          ),
+          BottomNavigationBarItem(
+            icon: SizedBox.shrink(),
+            label: 'EMBASSY',
+          ),
+        ],
+        backgroundColor: KetColorStyle.airOfMint,
+        currentIndex: _selectedIndex, // 지정 인덱스로 이동
+        selectedItemColor: Colors.black,
+        selectedLabelStyle: KetTextStyle.notoSansBold(20.0),
+        unselectedLabelStyle: KetTextStyle.notoSansMedium(16.0),
+        onTap: _onItemTapped, // 선언했던 onItemTapped,
+
+
       ),
     );
   }

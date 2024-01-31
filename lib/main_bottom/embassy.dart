@@ -13,9 +13,7 @@ class _EmbassyState extends State<Embassy>{
     return const Scaffold(
       body: Center(
         child: Column(
-          children: <Widget>[
-
-          ],
+          children: <Widget>[],
         ),
       ),
     );
