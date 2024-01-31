@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ket/tutorial/bus/tutorialBus.dart';
+import 'package:ket/tutorial/subway/tutorialSubWay.dart';
 import 'package:ket/ui_theme/KetColorStyle.dart';
 import 'package:ket/ui_theme/KetTextStyle.dart';
 
@@ -69,27 +71,41 @@ class _HomeState extends State<Home> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: KetColorStyle.airOfMint),
-                      width: 130,
-                      height: 130,
-                      alignment: Alignment.center,
-                      child: Image.asset('assets/icons/ic_home_bus.png',
-                          width: 74, height: 74),
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => TutorialBus()));
+                      },
+                      child: Container(
+                        decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: KetColorStyle.airOfMint),
+                        width: 130,
+                        height: 130,
+                        alignment: Alignment.center,
+                        child: Image.asset('assets/icons/ic_home_bus.png',
+                            width: 74, height: 74),
+
+                      ),
                     ),
+
                     spaceWidth(40),
-                    Container(
-                      decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: KetColorStyle.airOfMint),
-                      width: 130,
-                      height: 130,
-                      alignment: Alignment.center,
-                      child: Image.asset('assets/icons/ic_home_subway.png',
-                          width: 74, height: 74),
+
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => TutorialSubWay()));
+                      },
+                      child:Container(
+                        decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: KetColorStyle.airOfMint),
+                        width: 130,
+                        height: 130,
+                        alignment: Alignment.center,
+                        child: Image.asset('assets/icons/ic_home_subway.png',
+                            width: 74, height: 74),
+                      ) ,
                     )
+
                   ],
                 ),
               ),
