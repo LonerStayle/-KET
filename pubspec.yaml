@@ -94,6 +94,7 @@ flutter:
   assets:
   #Image#
     - assets/images/img_home_header.png
+    - assets/images/img_t_money_logo.png
 
   #Icon#
     - assets/icons/ic_home_bus.png
@@ -104,6 +105,7 @@ flutter:
     - assets/icons/ic_naver_logo.png
     - assets/icons/ic_home_embassy.png
     - assets/icons/ic_home_fab.png
+    - assets/icons/ic_check_box_on.png
 
 
   # To add assets to your application, add an assets section, like this:

@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:ket/PkgName.dart';
+import 'package:ket/content/androidPkgName.dart';
 import 'package:ket/tutorial/bus/tutorialBus.dart';
 import 'package:ket/tutorial/subway/tutorialSubWay.dart';
 import 'package:ket/ui_theme/KetColorStyle.dart';
