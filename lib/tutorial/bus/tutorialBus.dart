@@ -14,7 +14,7 @@ class _TutorialBusState extends State<TutorialBus>{
       body: Center(
         child: Column(
           children: <Widget>[
-            Text("\n\n\n버스 안내화면입니다.\n\n\n\n\n\n\n\n\n경선이 바보")
+            Text("\n\n\n버스 안내화면입니다.\n\n\n\n\n\n\n\n\n\n\n\n경선아 ㅎㅇㅎㅇㅎㅇㅎㅇ")
           ],
         ),
       ),

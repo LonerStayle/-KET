@@ -1,8 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:ket/PkgName.dart';
 import 'package:ket/tutorial/bus/tutorialBus.dart';
 import 'package:ket/tutorial/subway/tutorialSubWay.dart';
 import 'package:ket/ui_theme/KetColorStyle.dart';
+import 'package:ket/ui_theme/KetGlobal.dart';
 import 'package:ket/ui_theme/KetTextStyle.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -27,26 +32,30 @@ class _HomeState extends State<Home> {
                     "assets/images/img_home_header.png",
                     fit: BoxFit.fitWidth,
                     width: double.infinity,
+                    height: 275,
                   ),
                   Column(children: [
+                    Stack(children: [
+                      Padding(
+                          padding: const EdgeInsets.only(left: 53, top: 21),
+                          child: Text(
+                            "Welcome!",
+                            style: KetTextStyle.notoSansRegular(48.0),
+                          )),
+                      Padding(
+                          padding: const EdgeInsets.only(left: 90, top: 75),
+                          child: Text(
+                            "Have a wonderful trip!",
+                            style: KetTextStyle.notoSansMedium(20.0),
+                          )),
+                    ]),
                     Padding(
-                        padding: const EdgeInsets.only(left: 22, top: 74),
-                        child: Text(
-                          "Welcome!",
-                          style: KetTextStyle.notoSansMedium(48.0),
-                        )),
-                    Padding(
-                        padding: const EdgeInsets.only(left: 58, top: 10),
-                        child: Text(
-                          "Have a wonderful trip!",
-                          style: KetTextStyle.notoSansMedium(20.0),
-                        )),
-                    Padding(
-                        padding: const EdgeInsets.only(left: 25, top: 51),
+                        padding: const EdgeInsets.only(left: 21, top: 25),
                         child: Container(
-                          decoration: const BoxDecoration(
-                            color: KetColorStyle.airOfMint,
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          decoration: BoxDecoration(
+                            color: KetColorStyle.airOfMint.withOpacity(0.5),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10)),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(9),
@@ -59,84 +68,123 @@ class _HomeState extends State<Home> {
                   ])
                 ],
               ),
-              divider(),
+              KetGlobal.divider(),
               Padding(
-                padding: const EdgeInsets.only(top: 39, left: 16),
-                child: Text(
-                    "Check out the details of how to use\npublic transportation.\n(Press the button below to use it)",
-                    style: KetTextStyle.notoSansMedium(14.0)),
+                padding: const EdgeInsets.only(top: 20, left: 20),
+                child: Row(
+                  children: [
+                    Image.asset('assets/icons/ic_home_bus.png',
+                        width: 20, height: 18),
+                    KetGlobal.spaceWidth(8),
+                    Text("TRAFFIC", style: KetTextStyle.notoSansBold(18.0)),
+                  ],
+                ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 75, left: 30, right: 30),
+                padding: const EdgeInsets.only(top: 10, left: 20),
+                child: Text(
+                    "Check out how to use public transportation.\n(Press the button below to use it)",
+                    style: KetTextStyle.notoSansRegularColor(
+                        12.0, KetColorStyle.black.withAlpha(60))),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 22, left: 30, right: 30),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     GestureDetector(
-                      onTap: (){
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => TutorialBus()));
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => TutorialBus()));
                       },
                       child: Container(
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: KetColorStyle.airOfMint),
+                            color: KetColorStyle.isleRoyale,
+                            border: Border.all(
+                                width: 0.5, color: KetColorStyle.grayBorder)),
                         width: 130,
                         height: 130,
                         alignment: Alignment.center,
-                        child: Image.asset('assets/icons/ic_home_bus.png',
-                            width: 74, height: 74),
-
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset('assets/icons/ic_home_bus.png',
+                                width: 74, height: 74),
+                            Text(
+                              "BUS",
+                              style: KetTextStyle.notoSansBold(12.0),
+                            )
+                          ],
+                        ),
                       ),
                     ),
-
-                    spaceWidth(40),
-
+                    KetGlobal.spaceWidth(40),
                     GestureDetector(
-                      onTap: (){
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => TutorialSubWay()));
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => TutorialSubWay()));
                       },
-                      child:Container(
-                        decoration: const BoxDecoration(
+                      child: Container(
+                        decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: KetColorStyle.airOfMint),
+                            color: KetColorStyle.isleRoyale,
+                            border: Border.all(
+                                width: 0.5, color: KetColorStyle.grayBorder)),
                         width: 130,
                         height: 130,
                         alignment: Alignment.center,
-                        child: Image.asset('assets/icons/ic_home_subway.png',
-                            width: 74, height: 74),
-                      ) ,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset('assets/icons/ic_home_subway.png',
+                                width: 74, height: 74),
+                            Text(
+                              "SUBWAY",
+                              style: KetTextStyle.notoSansBold(12.0),
+                            )
+                          ],
+                        ),
+                      ),
                     )
-
                   ],
                 ),
               ),
-              spaceHeight(70),
-              divider(),
+              KetGlobal.spaceHeight(22),
+              KetGlobal.divider(),
               Padding(
-                padding: const EdgeInsets.only(top: 45, left: 16),
-                child: Text(
-                    "Check out how to find good restaurants\nin Korea like locals.\nMore than 80% of the Korean population is\nusing \"Naver Maps\".\nFor looking hot places.\nDo you want to have better trip?try using it below!",
-                    style: KetTextStyle.notoSansMedium(14.0)),
+                padding: const EdgeInsets.only(top: 20, left: 20),
+                child: Row(
+                  children: [
+                    Image.asset('assets/icons/ic_home_food.png',
+                        width: 20, height: 18),
+                    KetGlobal.spaceWidth(8),
+                    Text("RESTAURANT", style: KetTextStyle.notoSansBold(18.0)),
+                  ],
+                ),
               ),
-              spaceHeight(54),
               Padding(
-                  padding: EdgeInsets.only(left: 34, right: 26),
-                  child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/icons/ic_home_food.png',
-                          width: 28,
-                          height: 32,
-                        ),
-                        spaceWidth(22),
-                        Expanded(
-                            child: Container(
-                          height: 70,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: KetColorStyle.catalan),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(10)),
-                          ),
+                padding: const EdgeInsets.only(top: 10, left: 20),
+                child: Text(
+                    "Check out how to find restaurants  like koreans.\nDo you want to have better trip?\nTry using it below!",
+                    style: KetTextStyle.notoSansRegularColor(
+                        12.0, KetColorStyle.black.withAlpha(60))),
+              ),
+              KetGlobal.spaceHeight(22),
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Container(
+                    height: 70,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: KetColorStyle.catalan),
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    ),
+                    child: GestureDetector(
+                        onTap: () {
+                          openApp();
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 13, right: 9, top: 10, bottom: 10),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -145,52 +193,76 @@ class _HomeState extends State<Home> {
                                 width: 50,
                                 height: 50,
                               ),
-                              spaceWidth(12),
+                              KetGlobal.spaceWidth(12),
                               Text(
                                 "Check out the hot places\non Naver Map",
                                 style: KetTextStyle.notoSansMedium(14.0),
                               ),
                             ],
                           ),
-                        ))
-                      ])),
-              spaceHeight(51),
-              divider(),
-              Padding(
-                padding: const EdgeInsets.only(top: 39, left: 16),
-                child: Text(
-                    "We'll help you access the embassy\nfaster than anyone else if you have a problem\nduring your trip.",
-                    style: KetTextStyle.notoSansMedium(14.0)),
-              ),
-              spaceHeight(39),
-
+                        ))),
+              ]),
+              KetGlobal.spaceHeight(22),
+              KetGlobal.divider(),
+              KetGlobal.spaceHeight(20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Image.asset(
-                        'assets/icons/ic_home_embassy_bg.png',
-                        width: 120,
-                        height: 120,
-                      ),
-
-                      Positioned(
-                          top: 16,
-                          right: 27,
-                          child:  Image.asset(
-                            'assets/icons/ic_home_embassy.png',
-                            width: 70,
-                            height: 70,
-                          ))
-                      ,
-                    ],
-                  )
+                  Text("FIND YOUR EMBASSY",
+                      style: KetTextStyle.notoSansBold(18.0)),
                 ],
-              )
-              ,
-              spaceHeight(83)
+              ),
+              KetGlobal.spaceHeight(20),
+              Padding(
+                  padding: const EdgeInsets.only(
+                      left: 30, right: 30, top: 20, bottom: 20),
+                  child: Container(
+                      decoration: const BoxDecoration(
+                        color: KetColorStyle.airOfMint,
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      ),
+                      child: Padding(
+                          padding: const EdgeInsets.only(
+                              top: 18, bottom: 20, right: 25, left: 25),
+                          child: Column(
+                            children: [
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "You’ve got any problems?\nAccess to your embassy easily\nhere!",
+                                      style: KetTextStyle.notoSansRegularColor(
+                                          12,
+                                          KetColorStyle.black.withOpacity(0.6)),
+                                    ),
+                                    KetGlobal.spaceWidth(34),
+                                    Image.asset(
+                                      'assets/icons/ic_home_embassy.png',
+                                      width: 66,
+                                      height: 66,
+                                    )
+                                  ]),
+                              KetGlobal.spaceHeight(11),
+                              Container(
+                                width: double.infinity,
+                                height: 54,
+                                decoration: BoxDecoration(
+                                  color: KetColorStyle.catalan,
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Find",
+                                      style: KetTextStyle.notoSansBoldColor(
+                                          18.0, KetColorStyle.white),
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          )))),
             ],
           ),
         ),
@@ -198,16 +270,30 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Container spaceHeight(double height) {
-    return Container(height: height);
-  }
-
-  Container spaceWidth(double width) {
-    return Container(width: width);
-  }
-
-  Container divider() {
-    return Container(
-        width: double.infinity, height: 10, color: KetColorStyle.airOfMint);
+  Future<void> openApp() async {
+    if (Platform.isAndroid) {
+      await canLaunchUrl(
+        Uri.parse("market://launch?id=${PkgName.NaverMap}"),
+      )
+          ? await launchUrl(
+              Uri.parse("market://launch?id=${PkgName.NaverMap}"),
+            )
+          : await launchUrl(
+              Uri.parse(
+                  "https://play.google.com/store/apps/details?id=${PkgName.NaverMap}"),
+            );
+    } else if (Platform.isIOS) {
+      await canLaunchUrl(
+        Uri.parse("nmap://actionPath?appname=Ket"),
+      )
+          //if we can launch the url then open the app
+          ? await launchUrl(
+              Uri.parse("nmap://actionPath?appname=Ket"),
+            )
+          //if we cannot, then open a link to the playstore so the user downloads the app
+          : await launchUrl(
+              Uri.parse("http://itunes.apple.com/app/id311867728?mt=8"),
+            );
+    }
   }
 }

@@ -30,11 +30,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  url_launcher: ^6.2.4
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  flutter_share: ^2.0.0
+
+
 
 dev_dependencies:
   flutter_test:
@@ -94,11 +97,13 @@ flutter:
 
   #Icon#
     - assets/icons/ic_home_bus.png
+    - assets/icons/ic_home_bus_white.png
     - assets/icons/ic_home_subway.png
+    - assets/icons/ic_home_subway_white.png
     - assets/icons/ic_home_food.png
     - assets/icons/ic_naver_logo.png
     - assets/icons/ic_home_embassy.png
-    - assets/icons/ic_home_embassy_bg.png
+    - assets/icons/ic_home_fab.png
 
 
   # To add assets to your application, add an assets section, like this:

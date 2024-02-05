@@ -28,4 +28,32 @@ class KetTextStyle {
   static TextStyle notoSansThin(double fontSize) {
     return TextStyle(fontFamily: 'NotoSansThin', fontSize: fontSize);
   }
+
+  static TextStyle notoSansBlackColor(double fontSize, Color textColor) {
+    return TextStyle(fontFamily: 'NotoSansBlack', fontSize: fontSize,color: textColor);
+  }
+
+  static TextStyle notoSansBoldColor(double fontSize, Color textColor) {
+    return TextStyle(fontFamily: 'NotoSansBold', fontSize: fontSize,color: textColor);
+  }
+
+  static TextStyle notoSansDemiLightColor(double fontSize, Color textColor) {
+    return TextStyle(fontFamily: 'NotoSansDemiLight', fontSize: fontSize,color: textColor);
+  }
+
+  static TextStyle notoSansLightColor(double fontSize, Color textColor) {
+    return TextStyle(fontFamily: 'NotoSansLight', fontSize: fontSize,color: textColor);
+  }
+
+  static TextStyle notoSansMediumColor(double fontSize, Color textColor) {
+    return TextStyle(fontFamily: 'NotoSansMedium', fontSize: fontSize,color: textColor);
+  }
+
+  static TextStyle notoSansRegularColor(double fontSize, Color textColor) {
+    return TextStyle(fontFamily: 'NotoSansRegular', fontSize: fontSize,color: textColor);
+  }
+
+  static TextStyle notoSansThinColor(double fontSize, Color textColor) {
+    return TextStyle(fontFamily: 'NotoSansThin', fontSize: fontSize,color: textColor);
+  }
 }
