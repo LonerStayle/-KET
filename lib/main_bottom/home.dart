@@ -156,7 +156,7 @@ class _HomeState extends State<Home> {
                 padding: const EdgeInsets.only(top: 20, left: 20),
                 child: Row(
                   children: [
-                    Image.asset('assets/icons/ic_home_food.png',
+                    Image.asset('assets/icons/ic_home_restaurant.png',
                         width: 20, height: 18),
                     KetGlobal.spaceWidth(8),
                     Text("RESTAURANT", style: KetTextStyle.notoSansBold(18.0)),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ket/main_bottom/embassy.dart';
 import 'package:ket/main_bottom/home.dart';
-import 'package:ket/main_bottom/hotPlace.dart';
+import 'package:ket/main_bottom/restaurant.dart';
 import 'package:ket/tutorial/bus/tutorialBus.dart';
 import 'package:ket/tutorial/subway/tutorialSubWay.dart';
 import 'package:ket/ui_theme/KetColorStyle.dart';
@@ -40,7 +40,7 @@ class _MainState extends State<Main> {
   bool _isVisibleQuick = false;
 
   final List<Widget> _widgetOptions = <Widget>[
-    const HotPlace(),
+    const Restaurant(),
     const Home(),
     const Embassy(),
   ];
@@ -73,7 +73,7 @@ class _MainState extends State<Main> {
               items: const <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
                   icon: SizedBox.shrink(),
-                  label: 'FOOD',
+                  label: 'RESTAURANT',
                 ),
                 BottomNavigationBarItem(
                   icon: SizedBox.shrink(),
@@ -88,13 +88,14 @@ class _MainState extends State<Main> {
               currentIndex: _selectedIndex,
               // 지정 인덱스로 이동
               selectedItemColor: Colors.black,
-              selectedLabelStyle: KetTextStyle.notoSansBold(20.0),
-              unselectedLabelStyle: KetTextStyle.notoSansMedium(16.0),
+              selectedLabelStyle: KetTextStyle.notoSansBold(16.0),
+              unselectedLabelStyle: KetTextStyle.notoSansMedium(12.0),
               onTap: _onItemTapped, // 선언했던 onItemTapped,
             ),
           ),
           Positioned(
-              bottom: 68,
+              bottom: 62,
+              right: 6,
               child: GestureDetector(
                   onTap: () {
                     _onFabTapped(true);
@@ -193,7 +194,7 @@ class _MainState extends State<Main> {
       barrierLabel: "Barrier",
       barrierDismissible: true,
       barrierColor: Colors.black.withOpacity(0.5),
-      transitionDuration: const Duration(milliseconds: 700),
+      transitionDuration: const Duration(milliseconds: 200),
       pageBuilder: (_, __, ___) {
         return Material(
             type: MaterialType.transparency,
@@ -262,9 +263,9 @@ class _MainState extends State<Main> {
       transitionBuilder: (_, anim, __, child) {
         Tween<Offset> tween;
         if (anim.status == AnimationStatus.reverse) {
-          tween = Tween(begin: Offset(-1, 0), end: Offset.zero);
+          tween = Tween(begin: const Offset(0, 0), end: Offset.zero);
         } else {
-          tween = Tween(begin: Offset(1, 0), end: Offset.zero);
+          tween = Tween(begin: const Offset(0, 1), end: Offset.zero);
         }
 
         return SlideTransition(
