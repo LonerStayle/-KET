@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ket/content/androidPkgName.dart';
 import 'package:ket/ui_theme/KetColorStyle.dart';
 import 'package:ket/ui_theme/KetGlobal.dart';
 import 'package:ket/ui_theme/KetTextStyle.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Restaurant extends StatefulWidget {
   const Restaurant({super.key});
@@ -11,14 +15,42 @@ class Restaurant extends StatefulWidget {
   State<StatefulWidget> createState() => _RestaurantState();
 }
 
-class _RestaurantState extends State<Restaurant> {
+class _RestaurantState extends State<Restaurant>  {
   final _controller = TextEditingController();
   bool isSearchUIVisible = false;
 
 
+  final List<SearchModel> mockOrgSearchList = <SearchModel>[
+    SearchModel("pork belly",false),
+    SearchModel("medium pork belly",false),
+    SearchModel("well done pork belly",false),
+  ];
+
+  List<SearchModel> searchResultList = <SearchModel>[];
+
+  searchKeywords(String keyword) {
+    setState(() {
+      List<SearchModel> result = mockOrgSearchList.where((kw) => kw.keyword.contains(keyword)).toList();
+      searchResultList = result;
+    });
+  }
+
+  onSearchItemTapped(int index) async {
+    setState(() {
+      searchResultList[index].isSelect = true;
+    });
+    await Future.delayed(const Duration(microseconds: 30000));
+    setState(() {
+        searchResultList[index].isSelect = false;
+        openApp(index);
+    });
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset:true,
       body: Center(
         child: Column(
           children: <Widget>[
@@ -44,15 +76,12 @@ class _RestaurantState extends State<Restaurant> {
                   ),
                   KetGlobal.spaceHeight(3),
                   Container(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width,
+                    width: MediaQuery.of(context).size.width,
                     height: 48,
                     decoration: BoxDecoration(
                         border: Border.all(color: KetColorStyle.montegoBay),
                         borderRadius:
-                        const BorderRadius.all(Radius.circular(4))),
+                            const BorderRadius.all(Radius.circular(4))),
                     child: Row(
                       children: [
                         KetGlobal.spaceWidth(12),
@@ -72,18 +101,18 @@ class _RestaurantState extends State<Restaurant> {
                                     border: InputBorder.none,
                                     hintText: 'Search...',
                                     hintStyle:
-                                    KetTextStyle.notoSansRegularColor(
-                                        16, const Color(0xffa1a7c4))),
+                                        KetTextStyle.notoSansRegularColor(
+                                            16, const Color(0xffa1a7c4))),
                                 style: KetTextStyle.notoSansRegular(16),
                                 onChanged: (text) {
                                   setState(() {
                                     isSearchUIVisible = text.isNotEmpty;
+                                    searchKeywords(text);
                                   });
-                                },)
-                          ),
+                                },
+                              )),
                         ),
                         KetGlobal.spaceWidth(13),
-
                         Visibility(
                             visible: isSearchUIVisible,
                             child: GestureDetector(
@@ -99,10 +128,44 @@ class _RestaurantState extends State<Restaurant> {
                       ],
                     ),
                   ),
-
                   Stack(
                     children: [
-                      ListView.builder(itemBuilder: itemBuilder)
+                      Column(
+                        children: [
+                          KetGlobal.spaceHeight(28),
+                          // PageView(
+                          //
+                          // ),
+                        ],
+                      ),
+                      Visibility(
+
+                          visible: isSearchUIVisible,
+                          child: ListView.builder(
+
+                          shrinkWrap: true,
+                          itemCount: searchResultList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return GestureDetector(
+                                onTap: () {
+                                  onSearchItemTapped(index);
+                                },
+                                child: Container(
+                                  color: searchResultList[index].isSelect ? KetColorStyle.airOfMint:KetColorStyle.white,
+                                  width: 320,
+                                  height: 44,
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 10,
+                                          bottom: 10,
+                                          left: 16,
+                                          right: 16),
+                                      child: Text(
+                                          searchResultList[index].keyword,
+                                          style: KetTextStyle.notoSansRegular(16))),
+                                ));
+                          }))
                     ],
                   )
                 ]))
@@ -111,4 +174,38 @@ class _RestaurantState extends State<Restaurant> {
       ),
     );
   }
+
+  Future<void> openApp(int index) async {
+    if (Platform.isAndroid) {
+      await canLaunchUrl(
+        Uri.parse("market://launch?id=${PkgName.NaverMap}"),
+      )
+          ? await launchUrl(
+              Uri.parse("market://launch?id=${PkgName.NaverMap}"),
+            )
+          : await launchUrl(
+              Uri.parse(
+                  "https://play.google.com/store/apps/details?id=${PkgName.NaverMap}"),
+            );
+    } else if (Platform.isIOS) {
+      await canLaunchUrl(
+        Uri.parse("nmap://actionPath?appname=Ket"),
+      )
+          //if we can launch the url then open the app
+          ? await launchUrl(
+              Uri.parse("nmap://actionPath?appname=Ket"),
+            )
+          //if we cannot, then open a link to the playstore so the user downloads the app
+          : await launchUrl(
+              Uri.parse("http://itunes.apple.com/app/id311867728?mt=8"),
+            );
+    }
+  }
+
+}
+
+class SearchModel {
+    final String keyword;
+    bool isSelect;
+    SearchModel(this.keyword,this.isSelect);
 }
