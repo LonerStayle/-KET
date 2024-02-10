@@ -7,6 +7,7 @@ import 'package:ket/tutorial/subway/tutorialSubWay.dart';
 import 'package:ket/ui_theme/KetColorStyle.dart';
 import 'package:ket/ui_theme/KetGlobal.dart';
 import 'package:ket/ui_theme/KetTextStyle.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(const MyApp());
@@ -36,8 +37,8 @@ class Main extends StatefulWidget {
 
 class _MainState extends State<Main> {
   int _selectedIndex = 1;
-
   bool _isVisibleQuick = false;
+  bool _isVisibleQuestionTmoney = false;
 
   final List<Widget> _widgetOptions = <Widget>[
     const Restaurant(),
@@ -53,11 +54,26 @@ class _MainState extends State<Main> {
 
   void _onFabTapped(bool isVisible) {
     setState(() {
-      showCustomDialog(
-        context,
-      );
       _isVisibleQuick = isVisible;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    (() async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      setState(() {
+        _isVisibleQuestionTmoney =
+            prefs.getBool('isVisibleQuestionTmoney') ?? false;
+
+        if (_isVisibleQuestionTmoney == false) {
+          showCustomDialog(context);
+          prefs.setBool('isVisibleQuestionTmoney',true);
+          _isVisibleQuestionTmoney = true;
+        }
+      });
+    })();
   }
 
   @override
@@ -234,7 +250,6 @@ class _MainState extends State<Main> {
                                 style: KetTextStyle.notoSansBold(16),
                               ),
                             )),
-
                         GestureDetector(
                             onTap: () {},
                             child: Container(
@@ -246,8 +261,8 @@ class _MainState extends State<Main> {
                                   border: Border.all(
                                     color: KetColorStyle.isleRoyale,
                                   ),
-                                  borderRadius:
-                                  const BorderRadius.all(Radius.circular(5))),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(5))),
                               child: Text(
                                 "No",
                                 style: KetTextStyle.notoSansBold(16),
