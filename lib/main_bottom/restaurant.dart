@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ket/content/androidPkgName.dart';
+import 'package:ket/ui_model/SearchModel.dart';
 import 'package:ket/ui_theme/KetColorStyle.dart';
 import 'package:ket/ui_theme/KetGlobal.dart';
 import 'package:ket/ui_theme/KetTextStyle.dart';
@@ -16,7 +17,7 @@ class Restaurant extends StatefulWidget {
 }
 
 class _RestaurantState extends State<Restaurant> {
-  final _controller = TextEditingController();
+  final _searchController = TextEditingController();
   bool isSearchUIVisible = false;
 
   final List<SearchModel> mockOrgSearchList = <SearchModel>[
@@ -26,6 +27,8 @@ class _RestaurantState extends State<Restaurant> {
   ];
 
   List<SearchModel> searchResultList = <SearchModel>[];
+
+  final _pageController = PageController(viewportFraction: 0.9);
 
   searchKeywords(String keyword) {
     setState(() {
@@ -50,155 +53,181 @@ class _RestaurantState extends State<Restaurant> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              Container(
-                width: 320,
-                height: 100,
-                alignment: Alignment.center,
-                color: const Color(0xffFAD40F),
-                child: const Text("광고"),
-              ),
-              KetGlobal.spaceHeight(28),
-              Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 20),
-                  child: Column(children: [
-                    Row(
+        body: SingleChildScrollView(
+      child: Center(
+        child: Column(
+          children: <Widget>[
+            Container(
+              width: 320,
+              height: 50,
+              alignment: Alignment.center,
+              color: const Color(0xffFAD40F),
+              child: const Text("광고"),
+            ),
+            KetGlobal.spaceHeight(28),
+            Column(children: [
+              Padding(padding: const EdgeInsets.only(left: 20, right: 20),child:
+                Column(children: [
+                  Row(
+                    children: [
+                      Image.asset('assets/icons/ic_home_restaurant.png',
+                          width: 16, height: 18),
+                      KetGlobal.spaceWidth(8),
+                      Text("RESTAURANT",
+                          style: KetTextStyle.notoSansBold(18.0)),
+                    ],
+                  ),
+                  KetGlobal.spaceHeight(3),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 48,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: KetColorStyle.montegoBay),
+                        borderRadius:
+                        const BorderRadius.all(Radius.circular(4))),
+                    child: Row(
                       children: [
-                        Image.asset('assets/icons/ic_home_restaurant.png',
-                            width: 16, height: 18),
-                        KetGlobal.spaceWidth(8),
-                        Text("RESTAURANT",
-                            style: KetTextStyle.notoSansBold(18.0)),
-                      ],
-                    ),
-                    KetGlobal.spaceHeight(3),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 48,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: KetColorStyle.montegoBay),
-                          borderRadius:
-                          const BorderRadius.all(Radius.circular(4))),
-                      child: Row(
-                        children: [
-                          KetGlobal.spaceWidth(12),
-                          Image.asset('assets/icons/ic_search.png',
-                              width: 24, height: 24),
-                          KetGlobal.spaceWidth(7),
-                          Expanded(
-                            child: Container(
-                                margin: const EdgeInsets.only(top: 12),
-                                alignment: Alignment.center,
-                                child: TextField(
-                                  controller: _controller,
-                                  inputFormatters: [
-                                    LengthLimitingTextInputFormatter(20),
-                                  ],
-                                  decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      hintText: 'Search...',
-                                      hintStyle:
-                                      KetTextStyle.notoSansRegularColor(
-                                          16, const Color(0xffa1a7c4))),
-                                  style: KetTextStyle.notoSansRegular(16),
-                                  onChanged: (text) {
-                                    setState(() {
-                                      isSearchUIVisible = text.isNotEmpty;
-                                      searchKeywords(text);
-                                    });
-                                  },
-                                )),
-                          ),
-                          KetGlobal.spaceWidth(13),
-                          Visibility(
-                              visible: isSearchUIVisible,
-                              child: GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      _controller.clear();
-                                      isSearchUIVisible = false;
-                                    });
-                                  },
-                                  child: Image.asset('assets/icons/ic_x.png',
-                                      width: 22, height: 22))),
-                          KetGlobal.spaceWidth(13)
-                        ],
-                      ),
-                    ),
-                    Stack(
-                      children: [
-                        Column(
-                          children: [
-                            KetGlobal.spaceHeight(28),
-                            // PageView(
-                            //
-                            // ),
-                          ],
+                        KetGlobal.spaceWidth(12),
+                        Image.asset('assets/icons/ic_search.png',
+                            width: 24, height: 24),
+                        KetGlobal.spaceWidth(7),
+                        Expanded(
+                          child: Container(
+                              margin: const EdgeInsets.only(top: 12),
+                              alignment: Alignment.center,
+                              child: TextField(
+                                controller: _searchController,
+                                inputFormatters: [
+                                  LengthLimitingTextInputFormatter(20),
+                                ],
+                                decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: 'Search...',
+                                    hintStyle:
+                                    KetTextStyle.notoSansRegularColor(
+                                        16, const Color(0xffa1a7c4))),
+                                style: KetTextStyle.notoSansRegular(16),
+                                onChanged: (text) {
+                                  setState(() {
+                                    isSearchUIVisible = text.isNotEmpty;
+                                    searchKeywords(text);
+                                  });
+                                },
+                              )),
                         ),
+                        KetGlobal.spaceWidth(13),
                         Visibility(
                             visible: isSearchUIVisible,
-                            child: ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: searchResultList.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return GestureDetector(
-                                      onTap: () {
-                                        onSearchItemTapped(index);
-                                      },
-                                      child: Container(
-                                        color: searchResultList[index].isSelect
-                                            ? KetColorStyle.airOfMint
-                                            : KetColorStyle.white,
-                                        width: 320,
-                                        height: 44,
-                                        alignment: Alignment.centerLeft,
-                                        child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 10,
-                                                bottom: 10,
-                                                left: 16,
-                                                right: 16),
-                                            child: Text(
-                                                searchResultList[index].keyword,
-                                                style:
-                                                KetTextStyle.notoSansRegular(
-                                                    16))),
-                                      ));
-                                })),
-
-                        Container(
-                          height: 300,
-                          child: PageView(
-                            children: [
-                              // 첫 번째 페이지
-                              SizedBox.expand(
-                                child: Column(
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      child: Image.asset(
-                                          'assets/images/img_t_money_logo.png',
-                                          width: 290, height: 340),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ) ,
-                        )
-
+                            child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _searchController.clear();
+                                    isSearchUIVisible = false;
+                                  });
+                                },
+                                child: Image.asset('assets/icons/ic_x.png',
+                                    width: 22, height: 22))),
+                        KetGlobal.spaceWidth(13)
                       ],
-                    )
-                  ]))
-            ],
-          ),
+                    ),
+                  ),
+                ]),
+              ),
+
+              Stack(
+                children: [
+                  Container(
+                    height: 500,
+                    child: PageView(
+                      controller: _pageController,
+                      children: [
+                        // 첫 번째 페이지
+                        SizedBox.expand(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(10.0),
+                                child: Image.asset(
+                                    'assets/images/img_t_money_logo.png',
+                                    width: 320,
+                                    height: 340),
+                              ),
+                              Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10, right: 10),
+                                  child: Text(
+                                    "찾고자 하는 음식 종류를 검색하면 한국어로 \n자동 번역해서 네이버지도 앱으로 이동 합니다.",
+                                    style: KetTextStyle.notoSansRegular(16),
+                                  ))
+                            ],
+                          ),
+                        ),
+
+                        SizedBox.expand(
+                          child: Column(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(10.0),
+                                child: Image.asset(
+                                    'assets/images/img_t_money_logo.png',
+                                    width: 320,
+                                    height: 340),
+                              ),
+                              Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10, right: 10),
+                                  child: Text(
+                                    "찾고자 하는 음식 종류를 검색하면 한국어로 \n자동 번역해서 네이버지도 앱으로 이동 합니다.",
+                                    style: KetTextStyle.notoSansRegular(16),
+                                  ))
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Visibility(
+                      visible: isSearchUIVisible,
+                      child: ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: searchResultList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return GestureDetector(
+                                onTap: () {
+                                  onSearchItemTapped(index);
+                                },
+                                child: Container(
+                                  color: searchResultList[index].isSelect
+                                      ? KetColorStyle.airOfMint
+                                      : KetColorStyle.white,
+                                  width: 320,
+                                  height: 44,
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 10,
+                                          bottom: 10,
+                                          left: 16,
+                                          right: 16),
+                                      child: Text(
+                                          searchResultList[index].keyword,
+                                          style:
+                                          KetTextStyle.notoSansRegular(
+                                              16))),
+                                ));
+                          })),
+                ],
+              )
+
+
+
+            ])
+          ],
         ),
-      )
-    );
+      ),
+    ));
   }
 
   Future<void> openApp(int index) async {
@@ -229,9 +258,4 @@ class _RestaurantState extends State<Restaurant> {
   }
 }
 
-class SearchModel {
-  final String keyword;
-  bool isSelect;
 
-  SearchModel(this.keyword, this.isSelect);
-}

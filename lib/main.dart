@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:ket/main_bottom/embassy.dart';
 import 'package:ket/main_bottom/home.dart';
 import 'package:ket/main_bottom/restaurant.dart';
@@ -11,6 +12,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(const MyApp());
+  initNaverMap();
+}
+void initNaverMap() async{
+  await NaverMapSdk.instance.initialize(clientId: 'blqlx5zay4');
 }
 
 class MyApp extends StatelessWidget {
@@ -138,7 +143,7 @@ class _MainState extends State<Main> {
                             decoration:
                                 const BoxDecoration(color: Color(0xfffad40f)),
                             alignment: Alignment.center,
-                            height: 480,
+                            height: 50,
                             margin: const EdgeInsets.symmetric(horizontal: 20),
                             child: const Text("광고 오오")),
                         KetGlobal.spaceHeight(33),
@@ -180,7 +185,7 @@ class _MainState extends State<Main> {
                               width: MediaQuery.of(context).size.width - 48,
                               height: 64,
                               decoration: const BoxDecoration(
-                                color: KetColorStyle.montegoBay,
+                                color: KetColorStyle.catalan,
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(12.0)),
                               ),

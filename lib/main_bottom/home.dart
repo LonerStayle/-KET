@@ -238,9 +238,9 @@ class _HomeState extends State<Home> {
                                     KetGlobal.spaceWidth(34),
                                     Image.asset(
                                       'assets/icons/ic_home_embassy.png',
-                                      width: 66,
-                                      height: 66,
-                                    )
+                                      width: 56,
+                                      height: 56,
+                                    ),
                                   ]),
                               KetGlobal.spaceHeight(11),
                               Container(
