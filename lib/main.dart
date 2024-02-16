@@ -221,7 +221,7 @@ class _MainState extends State<Main> {
             type: MaterialType.transparency,
             child: Center(
               child: Container(
-                height: 368,
+                height: 380,
                 margin: const EdgeInsets.symmetric(horizontal: 20),
                 decoration: BoxDecoration(
                     color: Colors.white,
@@ -241,7 +241,11 @@ class _MainState extends State<Main> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              setState(() {
+
+                              });
+                            },
                             child: Container(
                               width: 60,
                               height: 34,
@@ -256,7 +260,9 @@ class _MainState extends State<Main> {
                               ),
                             )),
                         GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+
+                            },
                             child: Container(
                               width: 60,
                               height: 34,

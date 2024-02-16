@@ -36,12 +36,17 @@ class _KetCheckboxState extends State<KetCheckbox> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(
-                  isChecked
-                      ? 'assets/icons/ic_check_box_on.png'
-                      : 'assets/icons/ic_home_embassy.png',
-                  width: 30,
-                  height: 36),
+              Column(children: [
+                KetGlobal.spaceHeight(8),
+                Image.asset(
+                    isChecked
+                        ? 'assets/icons/ic_check_box_on.png'
+                        : 'assets/icons/ic_check_box_off.png',
+                    width: 30,
+                    height: 36)
+              ])
+              ,
+
               KetGlobal.spaceWidth(6),
               Text("Don't show this again.",
                   style: KetTextStyle.notoSansRegular(15))

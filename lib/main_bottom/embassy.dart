@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
@@ -45,6 +48,13 @@ class _EmbassyState extends State<Embassy> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    test();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
@@ -53,16 +63,25 @@ class _EmbassyState extends State<Embassy> {
             children: [
               Positioned(
                   child: NaverMap(
-                    options: const NaverMapViewOptions(),
-                    onMapReady: (controller) {
-                      print("네이버 맵 로딩됨!");
-                    },
-                  )),
+                options: const NaverMapViewOptions(locale: Locale('en')),
+                onMapReady: (controller) {
+                  var image = const NOverlayImage.fromAssetImage(
+                      'assets/icons/ic_naver_marker.png');
+                  final marker = NMarker(
+                      id: "test",
+                      position: const NLatLng(37.5658, 126.9751),
+                      icon: image,
+                      size: const Size(48, 48));
+                  controller.addOverlay(marker);
+                  marker.setOnTapListener((overlay) => {
+
+                  });
+                },
+              )),
               Container(
                 height: 182,
                 color: KetColorStyle.white,
               ),
-
               Visibility(
                   visible: isSearchUIVisible,
                   child: Column(children: [
@@ -179,5 +198,32 @@ class _EmbassyState extends State<Embassy> {
         ],
       ),
     );
+  }
+
+  Future<String> test() async {
+    var url = Uri.parse(
+        'https://api.edamam.com/auto-complete?app_id=73d9c75a&app_key=e611ca38d18470c7832724535f47c745&q=pork%20belly');
+    var client = http.Client();
+    var response = await client.get(
+      url,
+      headers: {
+        'Authorization':
+            'FcTAw%2BPnCRMmJ0VuH0Yj37qIgrXFMN%2BHd0BNnLlKUPtbGqhAlkhR%2FdzVPwr79x%2BzV%2FmeX3Ld7Olw7jlWpQs%2Fmw%3D%3D'
+      },
+    );
+
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      if (kDebugMode) {
+        print('log${response.body}');
+      }
+      return response.body;
+      // Album.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load album');
+    }
   }
 }
