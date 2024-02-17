@@ -73,9 +73,7 @@ class _EmbassyState extends State<Embassy> {
                       icon: image,
                       size: const Size(48, 48));
                   controller.addOverlay(marker);
-                  marker.setOnTapListener((overlay) => {
-
-                  });
+                  marker.setOnTapListener((overlay) => {});
                 },
               )),
               Container(
@@ -195,6 +193,28 @@ class _EmbassyState extends State<Embassy> {
                   ]))
             ],
           ),
+          Column(children: [
+            const Spacer(),
+            Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                child: Container(
+                  height: 160,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: const BoxDecoration(
+                      color: KetColorStyle.white,
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: KetColorStyle.grayBorder,
+                          blurRadius: 4,
+                          offset: Offset(4, 8), // Shadow position
+                        ),
+                      ]),
+                  child: Column(
+                    children: [],
+                  ),
+                ))
+          ])
         ],
       ),
     );

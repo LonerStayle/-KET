@@ -18,40 +18,43 @@ class KetGlobal {
 }
 
 class KetCheckbox extends StatefulWidget {
-  const KetCheckbox({Key? key}) : super(key: key);
+  const KetCheckbox({Key? key, required this.setChecked}) : super(key: key);
+  final Function(bool) setChecked;
+
 
   @override
   State<KetCheckbox> createState() => _KetCheckboxState();
 }
 
 class _KetCheckboxState extends State<KetCheckbox> {
-  bool isChecked = false;
+  bool _isChecked = false;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () {
-          setState(() => isChecked = !isChecked);
-        },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(children: [
-                KetGlobal.spaceHeight(8),
-                Image.asset(
-                    isChecked
-                        ? 'assets/icons/ic_check_box_on.png'
-                        : 'assets/icons/ic_check_box_off.png',
-                    width: 30,
-                    height: 36)
-              ])
-              ,
-
-              KetGlobal.spaceWidth(6),
-              Text("Don't show this again.",
-                  style: KetTextStyle.notoSansRegular(15))
-            ],
-          ),
-        );
+      onTap: (){
+        setState(() {
+          _isChecked = !_isChecked;
+          widget.setChecked(_isChecked);
+        });
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Column(children: [
+            KetGlobal.spaceHeight(8),
+            Image.asset(
+                _isChecked
+                    ? 'assets/icons/ic_check_box_on.png'
+                    : 'assets/icons/ic_check_box_off.png',
+                width: 30,
+                height: 36)
+          ]),
+          KetGlobal.spaceWidth(6),
+          Text("Don't show this again.",
+              style: KetTextStyle.notoSansRegular(15))
+        ],
+      ),
+    );
   }
 }

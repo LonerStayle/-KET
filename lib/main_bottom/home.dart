@@ -1,16 +1,14 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:ket/content/androidPkgName.dart';
 import 'package:ket/tutorial/bus/tutorialBus.dart';
 import 'package:ket/tutorial/subway/tutorialSubWay.dart';
 import 'package:ket/ui_theme/KetColorStyle.dart';
 import 'package:ket/ui_theme/KetGlobal.dart';
 import 'package:ket/ui_theme/KetTextStyle.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class Home extends StatefulWidget {
-  const Home({super.key});
+  const Home({super.key, required this.mainMoveNav});
+
+  final Function(int index) mainMoveNav;
 
   @override
   State<StatefulWidget> createState() => _HomeState();
@@ -180,7 +178,7 @@ class _HomeState extends State<Home> {
                     ),
                     child: GestureDetector(
                         onTap: () {
-                          openApp();
+                          widget.mainMoveNav(0);
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(
@@ -243,24 +241,29 @@ class _HomeState extends State<Home> {
                                     ),
                                   ]),
                               KetGlobal.spaceHeight(11),
-                              Container(
-                                width: double.infinity,
-                                height: 54,
-                                decoration: BoxDecoration(
-                                  color: KetColorStyle.catalan,
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "Find",
-                                      style: KetTextStyle.notoSansBoldColor(
-                                          18.0, KetColorStyle.white),
-                                    )
-                                  ],
-                                ),
-                              )
+                              GestureDetector(
+                                  onTap: () {
+                                    widget.mainMoveNav(2);
+                                  },
+                                  child: Container(
+                                    width: double.infinity,
+                                    height: 54,
+                                    decoration: BoxDecoration(
+                                      color: KetColorStyle.catalan,
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "Find",
+                                          style: KetTextStyle.notoSansBoldColor(
+                                              18.0, KetColorStyle.white),
+                                        )
+                                      ],
+                                    ),
+                                  ))
                             ],
                           )))),
             ],
@@ -268,32 +271,5 @@ class _HomeState extends State<Home> {
         ),
       ),
     );
-  }
-
-  Future<void> openApp() async {
-    if (Platform.isAndroid) {
-      await canLaunchUrl(
-        Uri.parse("market://launch?id=${PkgName.NaverMap}"),
-      )
-          ? await launchUrl(
-              Uri.parse("market://launch?id=${PkgName.NaverMap}"),
-            )
-          : await launchUrl(
-              Uri.parse(
-                  "https://play.google.com/store/apps/details?id=${PkgName.NaverMap}"),
-            );
-    } else if (Platform.isIOS) {
-      await canLaunchUrl(
-        Uri.parse("nmap://actionPath?appname=Ket"),
-      )
-          //if we can launch the url then open the app
-          ? await launchUrl(
-              Uri.parse("nmap://actionPath?appname=Ket"),
-            )
-          //if we cannot, then open a link to the playstore so the user downloads the app
-          : await launchUrl(
-              Uri.parse("http://itunes.apple.com/app/id311867728?mt=8"),
-            );
-    }
   }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
+
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:ket/main_bottom/embassy.dart';
 import 'package:ket/main_bottom/home.dart';
@@ -14,7 +16,8 @@ void main() {
   runApp(const MyApp());
   initNaverMap();
 }
-void initNaverMap() async{
+
+void initNaverMap() async {
   await NaverMapSdk.instance.initialize(clientId: 'blqlx5zay4');
 }
 
@@ -45,12 +48,6 @@ class _MainState extends State<Main> {
   bool _isVisibleQuick = false;
   bool _isVisibleQuestionTmoney = false;
 
-  final List<Widget> _widgetOptions = <Widget>[
-    const Restaurant(),
-    const Home(),
-    const Embassy(),
-  ];
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -63,6 +60,16 @@ class _MainState extends State<Main> {
     });
   }
 
+  void _onDialogChecked(bool check) {
+    setState(() {
+      _isVisibleQuestionTmoney = check;
+    });
+  }
+
+
+  List<Widget> _widgetOptions = [];
+
+
   @override
   void initState() {
     super.initState();
@@ -71,14 +78,15 @@ class _MainState extends State<Main> {
       setState(() {
         _isVisibleQuestionTmoney =
             prefs.getBool('isVisibleQuestionTmoney') ?? false;
-
-        if (_isVisibleQuestionTmoney == false) {
-          showCustomDialog(context);
-          prefs.setBool('isVisibleQuestionTmoney',true);
-          _isVisibleQuestionTmoney = true;
-        }
+        if (_isVisibleQuestionTmoney == false) showCustomDialog(context,prefs);
       });
     })();
+
+    _widgetOptions = <Widget>[
+      const Restaurant(),
+      Home(mainMoveNav:_onItemTapped),
+      const Embassy(),
+    ];
   }
 
   @override
@@ -134,14 +142,20 @@ class _MainState extends State<Main> {
                   },
                   child: Container(
                     color: KetColorStyle.black.withOpacity(0.3),
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery
+                        .of(context)
+                        .size
+                        .height,
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
                             decoration:
-                                const BoxDecoration(color: Color(0xfffad40f)),
+                            const BoxDecoration(color: Color(0xfffad40f)),
                             alignment: Alignment.center,
                             height: 50,
                             margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -153,12 +167,15 @@ class _MainState extends State<Main> {
                                   builder: (context) => const TutorialBus()));
                             },
                             child: Container(
-                              width: MediaQuery.of(context).size.width - 48,
+                              width: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width - 48,
                               height: 64,
                               decoration: const BoxDecoration(
                                 color: KetColorStyle.montegoBay,
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(12.0)),
+                                BorderRadius.all(Radius.circular(12.0)),
                               ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -179,15 +196,18 @@ class _MainState extends State<Main> {
                             onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) =>
-                                      const TutorialSubWay()));
+                                  const TutorialSubWay()));
                             },
                             child: Container(
-                              width: MediaQuery.of(context).size.width - 48,
+                              width: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width - 48,
                               height: 64,
                               decoration: const BoxDecoration(
                                 color: KetColorStyle.catalan,
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(12.0)),
+                                BorderRadius.all(Radius.circular(12.0)),
                               ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -209,7 +229,7 @@ class _MainState extends State<Main> {
         ]));
   }
 
-  void showCustomDialog(BuildContext context) {
+  void showCustomDialog(BuildContext contextDialog, SharedPreferences prefs) {
     showGeneralDialog(
       context: context,
       barrierLabel: "Barrier",
@@ -235,16 +255,15 @@ class _MainState extends State<Main> {
                     Image.asset('assets/images/img_t_money_logo.png',
                         width: 142, height: 140),
                     KetGlobal.spaceHeight(24),
-                    const KetCheckbox(),
+                    KetCheckbox(setChecked: _onDialogChecked),
                     KetGlobal.spaceHeight(30),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         GestureDetector(
                             onTap: () {
-                              setState(() {
-
-                              });
+                              prefs.setBool('isVisibleQuestionTmoney', _isVisibleQuestionTmoney);
+                              Navigator.pop(contextDialog);
                             },
                             child: Container(
                               width: 60,
@@ -253,7 +272,7 @@ class _MainState extends State<Main> {
                               decoration: const BoxDecoration(
                                   color: KetColorStyle.isleRoyale,
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
+                                  BorderRadius.all(Radius.circular(5))),
                               child: Text(
                                 "Yes",
                                 style: KetTextStyle.notoSansBold(16),
@@ -261,7 +280,7 @@ class _MainState extends State<Main> {
                             )),
                         GestureDetector(
                             onTap: () {
-
+                              Navigator.pop(context);
                             },
                             child: Container(
                               width: 60,
