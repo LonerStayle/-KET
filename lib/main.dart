@@ -280,7 +280,8 @@ class _MainState extends State<Main> {
                             )),
                         GestureDetector(
                             onTap: () {
-                              Navigator.pop(context);
+                              prefs.setBool('isVisibleQuestionTmoney', _isVisibleQuestionTmoney);
+                              Navigator.pop(contextDialog);
                             },
                             child: Container(
                               width: 60,
