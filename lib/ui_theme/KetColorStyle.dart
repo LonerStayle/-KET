@@ -8,4 +8,5 @@ class KetColorStyle {
   static const Color black = Color(0xff000000);
   static const Color grayBorder = Color(0xffE3E3E3);
   static const Color white = Color(0xffffffff);
+  static const Color gray = Color(0xff979797);
 }

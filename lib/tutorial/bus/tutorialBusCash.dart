@@ -14,7 +14,7 @@ class _TutorialBusCashState extends State<TutorialBusCash>{
       body: Center(
         child: Column(
           children: <Widget>[
-
+            Text("현금 사용법")
           ],
         ),
       ),

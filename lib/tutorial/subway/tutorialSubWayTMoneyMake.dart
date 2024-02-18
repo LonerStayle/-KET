@@ -14,7 +14,7 @@ class _TutorialSubWayTMoneyMakeState extends State<TutorialSubWayTMoneyMake>{
       body: Center(
         child: Column(
           children: <Widget>[
-
+            Text("티머니 만드는법")
           ],
         ),
       ),

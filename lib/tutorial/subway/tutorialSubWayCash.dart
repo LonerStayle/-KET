@@ -14,7 +14,7 @@ class _TutorialSubWayCashState extends State<TutorialSubWayCash>{
       body: Center(
         child: Column(
           children: <Widget>[
-
+            Text("현금 사용법")
           ],
         ),
       ),
