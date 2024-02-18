@@ -178,6 +178,9 @@ class _HomeState extends State<Home> {
                     ),
                     child: GestureDetector(
                         onTap: () {
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                            content: Text("Please search for Restaurant"),
+                          ));
                           widget.mainMoveNav(0);
                         },
                         child: Padding(
@@ -243,6 +246,9 @@ class _HomeState extends State<Home> {
                               KetGlobal.spaceHeight(11),
                               GestureDetector(
                                   onTap: () {
+                                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                      content: Text("Please search for Embassy"),
+                                    ));
                                     widget.mainMoveNav(2);
                                   },
                                   child: Container(

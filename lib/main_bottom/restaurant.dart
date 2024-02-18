@@ -1,5 +1,8 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ket/content/androidPkgName.dart';
@@ -20,7 +23,7 @@ class _RestaurantState extends State<Restaurant> {
   final _searchController = TextEditingController();
   bool isSearchUIVisible = false;
 
-  final List<SearchModel> mockOrgSearchList = <SearchModel>[
+  List<SearchModel> searchAllList = <SearchModel>[
     SearchModel("pork belly", false),
     SearchModel("medium pork belly", false),
     SearchModel("well done pork belly", false),
@@ -28,15 +31,19 @@ class _RestaurantState extends State<Restaurant> {
 
   List<SearchModel> searchResultList = <SearchModel>[];
 
-  final _pageController = PageController(viewportFraction: 0.9);
+  final _pageController = PageController(viewportFraction: 0.85);
 
   searchKeywords(String keyword) {
-    setState(() {
-      List<SearchModel> result = mockOrgSearchList
-          .where((kw) => kw.keyword.contains(keyword))
-          .toList();
-      searchResultList = result;
-    });
+    getSearchAllList(
+        keyword,
+        () => {
+              setState(() {
+                List<SearchModel> result = searchAllList
+                    .where((kw) => kw.keyword.contains(keyword))
+                    .toList();
+                searchResultList = result;
+              })
+            });
   }
 
   onSearchItemTapped(int index) async {
@@ -66,8 +73,9 @@ class _RestaurantState extends State<Restaurant> {
             ),
             KetGlobal.spaceHeight(28),
             Column(children: [
-              Padding(padding: const EdgeInsets.only(left: 20, right: 20),child:
-                Column(children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: Column(children: [
                   Row(
                     children: [
                       Image.asset('assets/icons/ic_home_restaurant.png',
@@ -84,7 +92,7 @@ class _RestaurantState extends State<Restaurant> {
                     decoration: BoxDecoration(
                         border: Border.all(color: KetColorStyle.montegoBay),
                         borderRadius:
-                        const BorderRadius.all(Radius.circular(4))),
+                            const BorderRadius.all(Radius.circular(4))),
                     child: Row(
                       children: [
                         KetGlobal.spaceWidth(12),
@@ -104,8 +112,8 @@ class _RestaurantState extends State<Restaurant> {
                                     border: InputBorder.none,
                                     hintText: 'Search...',
                                     hintStyle:
-                                    KetTextStyle.notoSansRegularColor(
-                                        16, const Color(0xffa1a7c4))),
+                                        KetTextStyle.notoSansRegularColor(
+                                            16, const Color(0xffa1a7c4))),
                                 style: KetTextStyle.notoSansRegular(16),
                                 onChanged: (text) {
                                   setState(() {
@@ -133,10 +141,9 @@ class _RestaurantState extends State<Restaurant> {
                   ),
                 ]),
               ),
-
               Stack(
                 children: [
-                  Container(
+                  SizedBox(
                     height: 500,
                     child: PageView(
                       controller: _pageController,
@@ -213,16 +220,12 @@ class _RestaurantState extends State<Restaurant> {
                                           right: 16),
                                       child: Text(
                                           searchResultList[index].keyword,
-                                          style:
-                                          KetTextStyle.notoSansRegular(
+                                          style: KetTextStyle.notoSansRegular(
                                               16))),
                                 ));
                           })),
                 ],
               )
-
-
-
             ])
           ],
         ),
@@ -232,11 +235,12 @@ class _RestaurantState extends State<Restaurant> {
 
   Future<void> openApp(int index) async {
     if (Platform.isAndroid) {
+
       await canLaunchUrl(
-        Uri.parse("market://launch?id=${PkgName.NaverMap}"),
+        Uri.parse("nmap://search?query=${searchResultList[index].keyword}&appname=${PkgName.NaverMap}"),
       )
           ? await launchUrl(
-              Uri.parse("market://launch?id=${PkgName.NaverMap}"),
+              Uri.parse("nmap://search?query=${searchResultList[index].keyword}&appname=${PkgName.NaverMap}"),
             )
           : await launchUrl(
               Uri.parse(
@@ -244,11 +248,11 @@ class _RestaurantState extends State<Restaurant> {
             );
     } else if (Platform.isIOS) {
       await canLaunchUrl(
-        Uri.parse("nmap://actionPath?appname=Ket"),
+        Uri.parse("nmap://actionPath?appname=Ket&search=${searchResultList[index].keyword}"),
       )
           //if we can launch the url then open the app
           ? await launchUrl(
-              Uri.parse("nmap://actionPath?appname=Ket"),
+              Uri.parse("nmap://actionPath?appname=Ket&search=${searchResultList[index].keyword}"),
             )
           //if we cannot, then open a link to the playstore so the user downloads the app
           : await launchUrl(
@@ -256,6 +260,20 @@ class _RestaurantState extends State<Restaurant> {
             );
     }
   }
+
+  void getSearchAllList(
+      String text, Function() onSuccess) async {
+    var url = Uri.parse(
+        'https://api.edamam.com/auto-complete?app_id=73d9c75a&app_key=e611ca38d18470c7832724535f47c745&q=$text');
+    var client = http.Client();
+    var response = await client.get(url);
+    if (response.statusCode == 200) {
+      List<dynamic> data = json.decode(response.body);
+      List<String> resultList = List<String>.from(data);
+      searchAllList = resultList.map((s) => SearchModel(s, false)).toList();
+      onSuccess();
+    } else {
+      throw Exception('Failed to load album');
+    }
+  }
 }
-
-
