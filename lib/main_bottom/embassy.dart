@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
@@ -5,6 +7,7 @@ import 'package:ket/ui_model/SearchModel.dart';
 import 'package:ket/ui_theme/KetColorStyle.dart';
 import 'package:ket/ui_theme/KetGlobal.dart';
 import 'package:ket/ui_theme/KetTextStyle.dart';
+import 'package:http/http.dart' as http;
 
 class Embassy extends StatefulWidget {
   const Embassy({super.key});
@@ -95,7 +98,8 @@ class _EmbassyState extends State<Embassy> {
             children: [
               Positioned(
                   child: NaverMap(
-                options: const NaverMapViewOptions(locale: Locale('en')),
+                options: const NaverMapViewOptions(locale: Locale('en'),
+                    logoAlign:NLogoAlign.leftTop),
                 onMapReady: (controller) {
                   _naverMapController = controller;
                 },
@@ -152,10 +156,10 @@ class _EmbassyState extends State<Embassy> {
                 child: Column(children: [
                   Row(
                     children: [
-                      Image.asset('assets/icons/ic_home_restaurant.png',
+                      Image.asset('assets/icons/ic_embassy.png',
                           width: 16, height: 18),
                       KetGlobal.spaceWidth(8),
-                      Text("RESTAURANT",
+                      Text("EMBASSY",
                           style: KetTextStyle.notoSansBold(18.0)),
                     ],
                   ),
@@ -221,7 +225,7 @@ class _EmbassyState extends State<Embassy> {
                 const Spacer(),
                 Padding(
                     padding:
-                        const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                        const EdgeInsets.only(left: 20, right: 20,bottom:20),
                     child: Container(
                       height: 160,
                       width: MediaQuery.of(context).size.width,
@@ -234,7 +238,8 @@ class _EmbassyState extends State<Embassy> {
                               blurRadius: 4,
                               offset: Offset(4, 8), // Shadow position
                             ),
-                          ]),
+                          ]
+                      ),
                       child: Column(
                         children: [
                           GestureDetector(
@@ -242,13 +247,17 @@ class _EmbassyState extends State<Embassy> {
                               /**test*/
                               removeSelectEmbassy();
                             },
+                            /**뷰삽입 예정*/
+                            child: Column(
+                              children: [],
+                            ),
                           )
                         ],
                       ),
                     ))
               ])),
           Positioned(
-              top: 500,
+              top: 300,
               left: 110,
               child: GestureDetector(
                 onTap: () {
@@ -262,4 +271,22 @@ class _EmbassyState extends State<Embassy> {
       ),
     );
   }
+
+  // var List<>embassyAllList = [];
+  // void getEmbassyAllList(
+  //     String text, Function() onSuccess) async {
+  //   var url = Uri.parse(
+  //       'https://api.odcloud.kr/api/15076569/v1/uddi:7692653c-21f9-4396-b6b3-f3f0cdbe9370?page=1&perPage=255&serviceKey=FcTAw%2BPnCRMmJ0VuH0Yj37qIgrXFMN%2BHd0BNnLlKUPtbGqhAlkhR%2FdzVPwr79x%2BzV%2FmeX3Ld7Olw7jlWpQs%2Fmw%3D%3D');
+  //   var client = http.Client();
+  //
+  //   var response = await client.get(url);
+  //   if (response.statusCode == 200) {
+  //     List<dynamic> data = json.decode(response.body);
+  //     List<String> resultList = List<String>.from(data);
+  //     searchAllList = resultList.map((s) => SearchModel(s, false)).toList();
+  //     onSuccess();
+  //   } else {
+  //     throw Exception('Failed to load album');
+  //   }
+  // }
 }
