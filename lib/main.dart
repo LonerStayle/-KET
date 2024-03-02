@@ -264,6 +264,8 @@ class _MainState extends State<Main> {
                             onTap: () {
                               prefs.setBool('isVisibleQuestionTmoney', _isVisibleQuestionTmoney);
                               Navigator.pop(contextDialog);
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => const TutorialBus()));
                             },
                             child: Container(
                               width: 60,
