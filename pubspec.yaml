@@ -97,6 +97,40 @@ flutter:
   #Image#
     - assets/images/img_home_header.png
     - assets/images/img_t_money_logo.png
+    - assets/images/img_tutorial_t_money.png
+
+    - assets/images/img_tutorial_sub_way_cash01.png
+    - assets/images/img_tutorial_sub_way_cash02.png
+    - assets/images/img_tutorial_sub_way_cash03.png
+    - assets/images/img_tutorial_sub_way_cash04.png
+    - assets/images/img_tutorial_sub_way_cash05.png
+    - assets/images/img_tutorial_sub_way_cash06.png
+    - assets/images/img_tutorial_sub_way_cash07.png
+    - assets/images/img_tutorial_sub_way_cash08.png
+    - assets/images/img_tutorial_sub_way_cash09.png
+    - assets/images/img_tutorial_sub_way_cash10.png
+    - assets/images/img_tutorial_sub_way_cash11.png
+
+    - assets/images/img_tutorial_sub_way_t_money01.png
+    - assets/images/img_tutorial_sub_way_t_money02.png
+    - assets/images/img_tutorial_sub_way_t_money03.png
+    - assets/images/img_tutorial_sub_way_t_money04.png
+    
+    - assets/images/img_tutorial_bus_cash01.png
+    - assets/images/img_tutorial_bus_cash02.png
+
+    - assets/images/img_tutorial_bus_t_money01.png
+    - assets/images/img_tutorial_bus_t_money02.png
+    - assets/images/img_tutorial_bus_t_money03.png
+
+    - assets/images/img_tutorial_t_money_make01.png
+    - assets/images/img_tutorial_t_money_make02.png
+    - assets/images/img_tutorial_t_money_make03.png
+    - assets/images/img_tutorial_t_money_make04.png
+    - assets/images/img_tutorial_t_money_make05.png
+
+
+
 
   #Icon#
     - assets/icons/ic_home_bus.png
@@ -113,7 +147,7 @@ flutter:
     - assets/icons/ic_x.png
     - assets/icons/ic_naver_marker.png
     - assets/icons/ic_embassy.png
-
+    - assets/icons/ic_warning_sky_blue.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

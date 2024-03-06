@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ket/tutorial/subway/tutorialSubWayCash.dart';
 import 'package:ket/tutorial/subway/tutorialSubWayTMoney.dart';
-import 'package:ket/tutorial/subway/tutorialSubWayTMoneyMake.dart';
+import 'package:ket/tutorial/tutorialTMoneyMake.dart';
 import 'package:ket/ui_theme/KetColorStyle.dart';
 import 'package:ket/ui_theme/KetTextStyle.dart';
 
@@ -39,11 +39,13 @@ class _TutorialSubWayState extends State<TutorialSubWay> {
                       Container(
                           alignment: Alignment.center,
                           height: 50,
-                          child: Text("by T-money")),
+                          child: const Text("Subway\nby T-money",
+                          textAlign: TextAlign.center)),
                       Container(
                           alignment: Alignment.center,
                           height: 50,
-                          child: Text("by CASH")),
+                          child: const Text("Subway\nby CASH",
+                              textAlign: TextAlign.center)),
                       Container(
                           alignment: Alignment.center,
                           height: 50,
@@ -57,7 +59,7 @@ class _TutorialSubWayState extends State<TutorialSubWay> {
             children: [
               TutorialSubWayTMoney(),
               TutorialSubWayCash(),
-              TutorialSubWayTMoneyMake(),
+              TutorialTMoneyMake(),
             ],
           ),
         ),

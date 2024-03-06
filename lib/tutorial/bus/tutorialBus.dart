@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ket/tutorial/bus/tutorialBusCash.dart';
 import 'package:ket/tutorial/bus/tutorialBusTMoney.dart';
-import 'package:ket/tutorial/bus/tutorialBusTMoneyMake.dart';
+import 'package:ket/tutorial/tutorialTMoneyMake.dart';
 import 'package:ket/ui_theme/KetColorStyle.dart';
 import 'package:ket/ui_theme/KetTextStyle.dart';
 
@@ -37,11 +37,13 @@ class _TutorialBusState extends State<TutorialBus> {
                       Container(
                           alignment: Alignment.center,
                           height: 50,
-                          child: Text("by T-money")),
+                          child: const Text("Bus\nby T-money",
+                              textAlign: TextAlign.center)),
                       Container(
                           alignment: Alignment.center,
                           height: 50,
-                          child: Text("by CASH")),
+                          child: const Text("Bus\nby CASH",
+                              textAlign: TextAlign.center)),
                       Container(
                           alignment: Alignment.center,
                           height: 50,
@@ -54,10 +56,11 @@ class _TutorialBusState extends State<TutorialBus> {
           body: const TabBarView(children:[
             TutorialBusTMoney(),
             TutorialBusCash(),
-            TutorialBusTMoneyMake(),
+            TutorialTMoneyMake(),
           ]),
         ),
       ),
     );
   }
 }
+

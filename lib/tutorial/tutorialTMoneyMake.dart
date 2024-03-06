@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:ket/ui_theme/KetGlobal.dart';
 import 'package:ket/ui_theme/KetTextStyle.dart';
 
-class TutorialBusCash extends StatefulWidget {
-  const TutorialBusCash({super.key});
+class TutorialTMoneyMake extends StatefulWidget {
+  const TutorialTMoneyMake({super.key});
 
   @override
-  State<StatefulWidget> createState() => _TutorialBusCashState();
+  State<StatefulWidget> createState() => _TutorialTMoneyMakeState();
 }
 
-class _TutorialBusCashState extends State<TutorialBusCash>{
+class _TutorialTMoneyMakeState extends State<TutorialTMoneyMake>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,28 +32,60 @@ class _TutorialBusCashState extends State<TutorialBusCash>{
                   height: 200,
                   fit: BoxFit.fill,
                 ),
-
                 KetGlobal.spaceHeight(10),
                 Text(
-                  "T-money is a transportation card that can be\nused all over the country in Korea.\nYou can use the transfer system cheeper,You can also use as credit/debit card.\n(if you buy the prepaid card type)",
+                  "If you have plans to use public\ntransportation, We are HIGHLY recomend\nyou to use T-money card.\nYou can save your transportation costs.",
+                  style: KetTextStyle.notoSansRegular(14)),
+
+                KetGlobal.spaceHeight(30),
+
+                Image.asset(
+                  'assets/images/img_tutorial_t_money_make01.png',
+                  width: MediaQuery.of(context).size.width,
+                  height: 200,
+                  fit: BoxFit.fill,
+                ),
+                KetGlobal.spaceHeight(10),
+                Text(
+                  "So many designs of cards",
+                  style: KetTextStyle.notoSansRegular(14),
+                  textAlign: TextAlign.start,
+                ),
+
+                KetGlobal.spaceHeight(20),
+
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 50,
+                  color: const Color(0xffFAD40F),
+                  child: const Text("광고"),
+                ),
+                KetGlobal.spaceHeight(20),
+                Image.asset(
+                  'assets/images/img_tutorial_t_money_make02.png',
+                  width: MediaQuery.of(context).size.width,
+                  height: 200,
+                  fit: BoxFit.fill,
+                ),
+                KetGlobal.spaceHeight(10),
+                Text(
+                  "T-Money Vending Machine",
                   style: KetTextStyle.notoSansRegular(14),
                   textAlign: TextAlign.start,
                 ),
                 KetGlobal.spaceHeight(30),
-
                 Image.asset(
-                  'assets/images/img_tutorial_bus_cash01.png',
+                  'assets/images/img_tutorial_t_money_make03.png',
                   width: MediaQuery.of(context).size.width,
                   height: 200,
                   fit: BoxFit.fill,
                 ),
                 KetGlobal.spaceHeight(10),
                 Text(
-                  "This means what cashless bus service stared\nand also offering to use transportation cards.",
+                  "Charge your card at the card vending machine.",
                   style: KetTextStyle.notoSansRegular(14),
                   textAlign: TextAlign.start,
                 ),
-
                 KetGlobal.spaceHeight(20),
 
                 Container(
@@ -62,28 +94,41 @@ class _TutorialBusCashState extends State<TutorialBusCash>{
                   color: const Color(0xffFAD40F),
                   child: const Text("광고"),
                 ),
+
                 KetGlobal.spaceHeight(20),
                 Image.asset(
-                  'assets/images/img_tutorial_bus_cash02.png',
+                  'assets/images/img_tutorial_t_money_make04.png',
                   width: MediaQuery.of(context).size.width,
                   height: 200,
                   fit: BoxFit.fill,
                 ),
                 KetGlobal.spaceHeight(10),
                 Text(
-                  "You can still pay by cash to put into the box.",
+                  "All convenience stores",
                   style: KetTextStyle.notoSansRegular(14),
                   textAlign: TextAlign.start,
                 ),
-
+                KetGlobal.spaceHeight(30),
+                Image.asset(
+                  'assets/images/img_tutorial_t_money_make05.png',
+                  width: MediaQuery.of(context).size.width,
+                  height: 200,
+                  fit: BoxFit.fill,
+                ),
+                KetGlobal.spaceHeight(10),
+                Text(
+                  "Charge your card at every CVS.",
+                  style: KetTextStyle.notoSansRegular(14),
+                  textAlign: TextAlign.start,
+                ),
                 KetGlobal.spaceHeight(20),
+
                 Container(
                   width: MediaQuery.of(context).size.width,
                   height: 50,
                   color: const Color(0xffFAD40F),
                   child: const Text("광고"),
                 ),
-
               ],
             )),
       ),
