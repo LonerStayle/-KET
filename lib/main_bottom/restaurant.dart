@@ -39,7 +39,9 @@ class _RestaurantState extends State<Restaurant> {
         () => {
               setState(() {
                 List<SearchModel> result = searchAllList
-                    .where((kw) => kw.keyword.contains(keyword))
+                    .where((kw) => kw.keyword
+                        .toLowerCase()
+                        .contains(keyword.toLowerCase()))
                     .toList();
                 searchResultList = result;
               })
@@ -235,12 +237,13 @@ class _RestaurantState extends State<Restaurant> {
 
   Future<void> openApp(int index) async {
     if (Platform.isAndroid) {
-
       await canLaunchUrl(
-        Uri.parse("nmap://search?query=${searchResultList[index].keyword}&appname=${PkgName.NaverMap}"),
+        Uri.parse(
+            "nmap://search?query=${searchResultList[index].keyword}&appname=${PkgName.NaverMap}"),
       )
           ? await launchUrl(
-              Uri.parse("nmap://search?query=${searchResultList[index].keyword}&appname=${PkgName.NaverMap}"),
+              Uri.parse(
+                  "nmap://search?query=${searchResultList[index].keyword}&appname=${PkgName.NaverMap}"),
             )
           : await launchUrl(
               Uri.parse(
@@ -248,11 +251,13 @@ class _RestaurantState extends State<Restaurant> {
             );
     } else if (Platform.isIOS) {
       await canLaunchUrl(
-        Uri.parse("nmap://actionPath?appname=Ket&search=${searchResultList[index].keyword}"),
+        Uri.parse(
+            "nmap://actionPath?appname=Ket&search=${searchResultList[index].keyword}"),
       )
           //if we can launch the url then open the app
           ? await launchUrl(
-              Uri.parse("nmap://actionPath?appname=Ket&search=${searchResultList[index].keyword}"),
+              Uri.parse(
+                  "nmap://actionPath?appname=Ket&search=${searchResultList[index].keyword}"),
             )
           //if we cannot, then open a link to the playstore so the user downloads the app
           : await launchUrl(
@@ -261,8 +266,7 @@ class _RestaurantState extends State<Restaurant> {
     }
   }
 
-  void getSearchAllList(
-      String text, Function() onSuccess) async {
+  void getSearchAllList(String text, Function() onSuccess) async {
     var url = Uri.parse(
         'https://api.edamam.com/auto-complete?app_id=73d9c75a&app_key=e611ca38d18470c7832724535f47c745&q=$text');
     var client = http.Client();

@@ -148,6 +148,8 @@ flutter:
     - assets/icons/ic_naver_marker.png
     - assets/icons/ic_embassy.png
     - assets/icons/ic_warning_sky_blue.png
+    - assets/icons/ic_call.png
+    - assets/icons/ic_call_embassy.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

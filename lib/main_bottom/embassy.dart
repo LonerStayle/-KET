@@ -3,11 +3,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
+import 'package:ket/ui_model/EmbassyModel.dart';
 import 'package:ket/ui_model/SearchModel.dart';
 import 'package:ket/ui_theme/KetColorStyle.dart';
 import 'package:ket/ui_theme/KetGlobal.dart';
 import 'package:ket/ui_theme/KetTextStyle.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 class Embassy extends StatefulWidget {
   const Embassy({super.key});
@@ -22,19 +24,33 @@ class _EmbassyState extends State<Embassy> {
 
   NaverMapController? _naverMapController;
   NMarker? _selectMarker;
+  EmbassyModel? _embassyModel;
 
-  final List<SearchModel> mockOrgSearchList = <SearchModel>[
-    SearchModel("pork belly", false),
-    SearchModel("medium pork belly", false),
-    SearchModel("well done pork belly", false),
+  final List<EmbassyModel> mockOrgSearchList = <EmbassyModel>[
+    EmbassyModel("Embassy of Japan in Korea", "0221705200", "(02)2170-5200",
+        37.575173, 126.980098, false),
+    EmbassyModel("Embassy of People's Republic of China, Seoul", "027719020",
+        "(02)771-9020", 37.563028, 126.982989, false),
+    EmbassyModel("USA. Embassy in Seoul, Republic Of Korea, Seoul", "023974114",
+        "(02)397-4114", 37.573105, 126.977871, false),
+    EmbassyModel("Taipei Mission in Korea", "0263296000", "02-6329-6000",
+        37.569519, 126.976184, false),
+    EmbassyModel("Vietnam Embassy Seoul", "027399399", "02-739-9399", 37.586497,
+        126.984043, false),
+    EmbassyModel("Embassy of Germany", "027484114", "02-748-4114", 37.555526,
+        126.973741, false),
+    EmbassyModel("Embassy of Denmark, Korea", "027954187", "02-795-4187",
+        37.555526, 126.973741, false),
+    EmbassyModel("Embassy of France", "0231494300", "02-3149-4300", 37.561304,
+        126.965702, false),
   ];
 
-  List<SearchModel> searchResultList = <SearchModel>[];
+  List<EmbassyModel> searchResultList = <EmbassyModel>[];
 
   searchKeywords(String keyword) {
     setState(() {
-      List<SearchModel> result = mockOrgSearchList
-          .where((kw) => kw.keyword.contains(keyword))
+      List<EmbassyModel> result = mockOrgSearchList
+          .where((kw) => kw.name.toLowerCase().contains(keyword.toLowerCase()))
           .toList();
       searchResultList = result;
     });
@@ -43,24 +59,29 @@ class _EmbassyState extends State<Embassy> {
   onSearchItemTapped(int index) async {
     setState(() {
       searchResultList[index].isSelect = true;
+      onSelectEmbassy(searchResultList[index]);
     });
     await Future.delayed(const Duration(microseconds: 30000));
     setState(() {
       searchResultList[index].isSelect = false;
+      searchController.clear();
+      _isSearchUIVisible = false;
+      FocusManager.instance.primaryFocus?.unfocus();
     });
   }
 
-  onSelectEmbassy() {
+  onSelectEmbassy(EmbassyModel embassy) {
     setState(() {
       var image = const NOverlayImage.fromAssetImage(
           'assets/icons/ic_naver_marker.png');
 
+      _embassyModel = embassy;
       _selectMarker = NMarker(
-          id: "test",
-          position: const NLatLng(37.5658, 126.9751),
+          id: embassy.name,
+          position: NLatLng(embassy.let, embassy.long),
           icon: image,
           size: const Size(48, 48),
-          caption: const NOverlayCaption(text: '경선이 대사관'));
+          caption: NOverlayCaption(text: embassy.name));
 
       _selectMarker!.setOnTapListener((overlay) => {
             ScaffoldMessenger.of(context)
@@ -69,7 +90,7 @@ class _EmbassyState extends State<Embassy> {
 
       var cameraPosition = NCameraUpdate.withParams(
           //latitude 는 꼭 + 를 해줘야 센터가 맞다.
-          target: NLatLng(_selectMarker!.position.latitude + 0.001,
+          target: NLatLng(_selectMarker!.position.latitude + 0.0015,
               _selectMarker!.position.longitude));
       _naverMapController?.updateCamera(cameraPosition);
       _naverMapController?.addOverlay(_selectMarker!);
@@ -80,13 +101,8 @@ class _EmbassyState extends State<Embassy> {
     setState(() {
       _naverMapController?.clearOverlays();
       _selectMarker = null;
+      _embassyModel = null;
     });
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
   }
 
   @override
@@ -98,8 +114,8 @@ class _EmbassyState extends State<Embassy> {
             children: [
               Positioned(
                   child: NaverMap(
-                options: const NaverMapViewOptions(locale: Locale('en'),
-                    logoAlign:NLogoAlign.leftTop),
+                options: const NaverMapViewOptions(
+                    locale: Locale('en'), logoAlign: NLogoAlign.leftTop),
                 onMapReady: (controller) {
                   _naverMapController = controller;
                 },
@@ -134,7 +150,7 @@ class _EmbassyState extends State<Embassy> {
                                         bottom: 10,
                                         left: 16,
                                         right: 16),
-                                    child: Text(searchResultList[index].keyword,
+                                    child: Text(searchResultList[index].name,
                                         style:
                                             KetTextStyle.notoSansRegular(16))),
                               ));
@@ -159,8 +175,7 @@ class _EmbassyState extends State<Embassy> {
                       Image.asset('assets/icons/ic_embassy.png',
                           width: 16, height: 18),
                       KetGlobal.spaceWidth(8),
-                      Text("EMBASSY",
-                          style: KetTextStyle.notoSansBold(18.0)),
+                      Text("EMBASSY", style: KetTextStyle.notoSansBold(18.0)),
                     ],
                   ),
                   KetGlobal.spaceHeight(3),
@@ -225,9 +240,9 @@ class _EmbassyState extends State<Embassy> {
                 const Spacer(),
                 Padding(
                     padding:
-                        const EdgeInsets.only(left: 20, right: 20,bottom:20),
+                        const EdgeInsets.only(left: 20, right: 20, bottom: 20),
                     child: Container(
-                      height: 160,
+
                       width: MediaQuery.of(context).size.width,
                       decoration: const BoxDecoration(
                           color: KetColorStyle.white,
@@ -238,55 +253,87 @@ class _EmbassyState extends State<Embassy> {
                               blurRadius: 4,
                               offset: Offset(4, 8), // Shadow position
                             ),
-                          ]
-                      ),
+                          ]),
                       child: Column(
                         children: [
+                          KetGlobal.spaceHeight(21),
+                          Row(
+                            children: [
+                              KetGlobal.spaceWidth(35),
+                              Image.asset('assets/icons/ic_embassy.png',
+                                  width: 14, height: 16),
+                              KetGlobal.spaceWidth(8),
+                              Text(_embassyModel?.name ?? "",
+                                  style: KetTextStyle.notoSansRegular(14))
+                            ],
+                          ),
+                          KetGlobal.spaceHeight(17),
+                          Row(
+                            children: [
+                              KetGlobal.spaceWidth(35),
+                              Image.asset('assets/icons/ic_call.png',
+                                  width: 14, height: 16),
+                              KetGlobal.spaceWidth(8),
+                              Text(_embassyModel?.transPhoneNumber ?? "",
+                                  style: KetTextStyle.notoSansRegular(14))
+                            ],
+                          ),
+                          KetGlobal.spaceHeight(21),
                           GestureDetector(
-                            onTap: () {
-                              /**test*/
-                              removeSelectEmbassy();
+                            onTap: () async {
+                              final call = Uri.parse('tel:+82 ${_embassyModel?.phoneNumber}');
+                              if (await canLaunchUrl(call)) {
+                              launchUrl(call);
+                              } else {
+                              throw 'Could not launch $call';
+                              }
                             },
-                            /**뷰삽입 예정*/
-                            child: Column(
-                              children: [],
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  bottom: 17, left: 17, right: 17),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: 50,
+                                decoration: const BoxDecoration(
+                                  color: KetColorStyle.montegoBay,
+                                  borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text("CALL This Number",
+                                    style: KetTextStyle.notoSansBoldColor(20, KetColorStyle.white)),
+                                    KetGlobal.spaceWidth(5),
+                                    Image.asset('assets/icons/ic_call_embassy.png',width: 28,height: 26,)
+                                  ],
+                                ),
+                              ),
                             ),
                           )
                         ],
                       ),
                     ))
               ])),
-          Positioned(
-              top: 300,
-              left: 110,
-              child: GestureDetector(
-                onTap: () {
-                  onSelectEmbassy();
-                },
-                child: Text("테스트 버튼",
-                    style: KetTextStyle.notoSansBoldColor(
-                        36, KetColorStyle.catalan)),
-              ))
         ],
       ),
     );
   }
 
-  // var List<>embassyAllList = [];
-  // void getEmbassyAllList(
-  //     String text, Function() onSuccess) async {
-  //   var url = Uri.parse(
-  //       'https://api.odcloud.kr/api/15076569/v1/uddi:7692653c-21f9-4396-b6b3-f3f0cdbe9370?page=1&perPage=255&serviceKey=FcTAw%2BPnCRMmJ0VuH0Yj37qIgrXFMN%2BHd0BNnLlKUPtbGqhAlkhR%2FdzVPwr79x%2BzV%2FmeX3Ld7Olw7jlWpQs%2Fmw%3D%3D');
-  //   var client = http.Client();
-  //
-  //   var response = await client.get(url);
-  //   if (response.statusCode == 200) {
-  //     List<dynamic> data = json.decode(response.body);
-  //     List<String> resultList = List<String>.from(data);
-  //     searchAllList = resultList.map((s) => SearchModel(s, false)).toList();
-  //     onSuccess();
-  //   } else {
-  //     throw Exception('Failed to load album');
-  //   }
-  // }
+// var List<>embassyAllList = [];
+// void getEmbassyAllList(
+//     String text, Function() onSuccess) async {
+//   var url = Uri.parse(
+//       'https://api.odcloud.kr/api/15076569/v1/uddi:7692653c-21f9-4396-b6b3-f3f0cdbe9370?page=1&perPage=255&serviceKey=FcTAw%2BPnCRMmJ0VuH0Yj37qIgrXFMN%2BHd0BNnLlKUPtbGqhAlkhR%2FdzVPwr79x%2BzV%2FmeX3Ld7Olw7jlWpQs%2Fmw%3D%3D');
+//   var client = http.Client();
+//
+//   var response = await client.get(url);
+//   if (response.statusCode == 200) {
+//     List<dynamic> data = json.decode(response.body);
+//     List<String> resultList = List<String>.from(data);
+//     searchAllList = resultList.map((s) => SearchModel(s, false)).toList();
+//     onSuccess();
+//   } else {
+//     throw Exception('Failed to load album');
+//   }
+// }
 }
