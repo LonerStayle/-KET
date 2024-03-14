@@ -31,7 +31,7 @@ class _RestaurantState extends State<Restaurant> {
 
   List<SearchModel> searchResultList = <SearchModel>[];
 
-  final _pageController = PageController(viewportFraction: 0.85);
+  final _pageController = PageController(viewportFraction: 0.8);
 
   searchKeywords(String keyword) {
     getSearchAllList(
@@ -143,10 +143,11 @@ class _RestaurantState extends State<Restaurant> {
                   ),
                 ]),
               ),
+              KetGlobal.spaceHeight(10),
               Stack(
                 children: [
                   SizedBox(
-                    height: 500,
+                    height: 460,
                     child: PageView(
                       controller: _pageController,
                       children: [
@@ -158,16 +159,40 @@ class _RestaurantState extends State<Restaurant> {
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(10.0),
                                 child: Image.asset(
-                                    'assets/images/img_t_money_logo.png',
-                                    width: 320,
-                                    height: 340),
+                                    'assets/images/img_naver_map00.png',
+                                    width: 290,
+                                    height: 380),
                               ),
                               Padding(
                                   padding: const EdgeInsets.only(
                                       left: 10, right: 10),
                                   child: Text(
-                                    "찾고자 하는 음식 종류를 검색하면 한국어로 \n자동 번역해서 네이버지도 앱으로 이동 합니다.",
-                                    style: KetTextStyle.notoSansRegular(16),
+                                    "When you search for the type of food\nyou are looking for, this KET app will\nautomatically translate it into Korean\nand go to the Naver Map app.",
+                                    style: KetTextStyle.notoSansRegular(13),
+                                    textAlign: TextAlign.start,
+                                  ))
+                            ],
+                          ),
+                        ),
+                        SizedBox.expand(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(10.0),
+                                child: Image.asset(
+                                    'assets/images/img_naver_map01.png',
+                                    width: 290,
+                                    height: 380),
+                              ),
+                              Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10, right: 10
+                                  ),
+                                  child: Text(
+                                    "영업중 - Open\n실시간 예약 - Reservation\n쿠폰 - Coupon\n포장주문 - Takeaway Order",
+                                    style: KetTextStyle.notoSansRegular(13),
+                                    textAlign: TextAlign.start,
                                   ))
                             ],
                           ),
@@ -179,16 +204,59 @@ class _RestaurantState extends State<Restaurant> {
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(10.0),
                                 child: Image.asset(
-                                    'assets/images/img_t_money_logo.png',
-                                    width: 320,
-                                    height: 340),
+                                    'assets/images/img_naver_map02.png',
+                                    width: 290,
+                                    height: 380),
                               ),
                               Padding(
                                   padding: const EdgeInsets.only(
                                       left: 10, right: 10),
                                   child: Text(
-                                    "찾고자 하는 음식 종류를 검색하면 한국어로 \n자동 번역해서 네이버지도 앱으로 이동 합니다.",
-                                    style: KetTextStyle.notoSansRegular(16),
+                                    "You can check when the restaurant\nopens and closes.\n영업 전 - Closed (Not open yet)\n00:00에 영업 시작 - Open at 00:00",
+                                    style: KetTextStyle.notoSansRegular(13),
+                                  ))
+                            ],
+                          ),
+                        ),
+
+                        SizedBox.expand(
+                          child: Column(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(10.0),
+                                child: Image.asset(
+                                    'assets/images/img_naver_map03.png',
+                                    width: 290,
+                                    height: 380),
+                              ),
+                              Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10, right: 10),
+                                  child: Text(
+                                    "You can check the business hours.\n영업 중 - Open\n00:00에 영업 종료 - Close at 00:00",
+                                    style: KetTextStyle.notoSansRegular(13),
+                                  ))
+                            ],
+                          ),
+                        ),
+
+                        SizedBox.expand(
+                          child: Column(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(10.0),
+                                child: Image.asset(
+                                    'assets/images/img_naver_map04.png',
+                                    width: 290,
+                                    height: 380),
+                              ),
+                              Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10, right: 10),
+                                  child: Text(
+                                    "You can also check the break time\nand the last order time.",
+                                    style: KetTextStyle.notoSansRegular(13),
+                                    textAlign: TextAlign.start,
                                   ))
                             ],
                           ),

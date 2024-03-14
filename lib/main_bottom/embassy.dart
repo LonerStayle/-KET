@@ -1,14 +1,12 @@
-import 'dart:convert';
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:ket/ui_model/EmbassyModel.dart';
-import 'package:ket/ui_model/SearchModel.dart';
 import 'package:ket/ui_theme/KetColorStyle.dart';
 import 'package:ket/ui_theme/KetGlobal.dart';
 import 'package:ket/ui_theme/KetTextStyle.dart';
-import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 
 class Embassy extends StatefulWidget {
@@ -242,7 +240,6 @@ class _EmbassyState extends State<Embassy> {
                     padding:
                         const EdgeInsets.only(left: 20, right: 20, bottom: 20),
                     child: Container(
-
                       width: MediaQuery.of(context).size.width,
                       decoration: const BoxDecoration(
                           color: KetColorStyle.white,
@@ -281,11 +278,12 @@ class _EmbassyState extends State<Embassy> {
                           KetGlobal.spaceHeight(21),
                           GestureDetector(
                             onTap: () async {
-                              final call = Uri.parse('tel:+82 ${_embassyModel?.phoneNumber}');
+                              final call = Uri.parse(
+                                  'tel:+82 ${_embassyModel?.phoneNumber}');
                               if (await canLaunchUrl(call)) {
-                              launchUrl(call);
+                                launchUrl(call);
                               } else {
-                              throw 'Could not launch $call';
+                                throw 'Could not launch $call';
                               }
                             },
                             child: Padding(
@@ -296,15 +294,21 @@ class _EmbassyState extends State<Embassy> {
                                 height: 50,
                                 decoration: const BoxDecoration(
                                   color: KetColorStyle.montegoBay,
-                                  borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(12.0)),
                                 ),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text("CALL This Number",
-                                    style: KetTextStyle.notoSansBoldColor(20, KetColorStyle.white)),
+                                        style: KetTextStyle.notoSansBoldColor(
+                                            20, KetColorStyle.white)),
                                     KetGlobal.spaceWidth(5),
-                                    Image.asset('assets/icons/ic_call_embassy.png',width: 28,height: 26,)
+                                    Image.asset(
+                                      'assets/icons/ic_call_embassy.png',
+                                      width: 28,
+                                      height: 26,
+                                    )
                                   ],
                                 ),
                               ),
