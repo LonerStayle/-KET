@@ -6,7 +6,8 @@ import 'package:ket/ui_theme/KetColorStyle.dart';
 import 'package:ket/ui_theme/KetTextStyle.dart';
 
 class TutorialSubWay extends StatefulWidget {
-  const TutorialSubWay({super.key});
+  final int initialTabIndex;
+  const TutorialSubWay({super.key, this.initialTabIndex = 0});
 
   @override
   State<StatefulWidget> createState() => _TutorialSubWayState();
@@ -17,6 +18,7 @@ class _TutorialSubWayState extends State<TutorialSubWay> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: DefaultTabController(
+        initialIndex: widget.initialTabIndex,
         length: 3,
         child: Scaffold(
           appBar: PreferredSize(

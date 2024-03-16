@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
@@ -56,6 +54,7 @@ class _EmbassyState extends State<Embassy> {
 
   onSearchItemTapped(int index) async {
     setState(() {
+      _naverMapController?.clearOverlays();
       searchResultList[index].isSelect = true;
       onSelectEmbassy(searchResultList[index]);
     });
@@ -82,9 +81,8 @@ class _EmbassyState extends State<Embassy> {
           caption: NOverlayCaption(text: embassy.name));
 
       _selectMarker!.setOnTapListener((overlay) => {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(const SnackBar(content: Text("Testtt")))
-          });
+        onSelectEmbassy(embassy)}
+      );
 
       var cameraPosition = NCameraUpdate.withParams(
           //latitude 는 꼭 + 를 해줘야 센터가 맞다.
@@ -97,7 +95,6 @@ class _EmbassyState extends State<Embassy> {
 
   removeSelectEmbassy() {
     setState(() {
-      _naverMapController?.clearOverlays();
       _selectMarker = null;
       _embassyModel = null;
     });
@@ -106,238 +103,236 @@ class _EmbassyState extends State<Embassy> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Stack(
-            children: [
-              Positioned(
-                  child: NaverMap(
-                options: const NaverMapViewOptions(
-                    locale: Locale('en'), logoAlign: NLogoAlign.leftTop),
-                onMapReady: (controller) {
-                  _naverMapController = controller;
-                },
-              )),
-              Container(
-                height: 182,
-                color: KetColorStyle.white,
-              ),
-              Visibility(
-                  visible: _isSearchUIVisible,
-                  child: Column(children: [
-                    KetGlobal.spaceHeight(156),
-                    ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: searchResultList.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return GestureDetector(
-                              onTap: () {
-                                onSearchItemTapped(index);
-                              },
-                              child: Container(
-                                color: searchResultList[index].isSelect
-                                    ? KetColorStyle.airOfMint
-                                    : KetColorStyle.white,
-                                width: 320,
-                                height: 44,
-                                alignment: Alignment.centerLeft,
-                                child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 10,
-                                        bottom: 10,
-                                        left: 16,
-                                        right: 16),
-                                    child: Text(searchResultList[index].name,
-                                        style:
-                                            KetTextStyle.notoSansRegular(16))),
-                              ));
-                        })
-                  ])),
-            ],
-          ),
-          Column(children: <Widget>[
-            Container(
-              width: 320,
-              height: 50,
-              alignment: Alignment.center,
-              color: const Color(0xffFAD40F),
-              child: const Text("광고"),
-            ),
-            KetGlobal.spaceHeight(28),
-            Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20),
-                child: Column(children: [
-                  Row(
-                    children: [
-                      Image.asset('assets/icons/ic_embassy.png',
-                          width: 16, height: 18),
-                      KetGlobal.spaceWidth(8),
-                      Text("EMBASSY", style: KetTextStyle.notoSansBold(18.0)),
-                    ],
-                  ),
-                  KetGlobal.spaceHeight(3),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 48,
-                    decoration: BoxDecoration(
-                        border: Border.all(color: KetColorStyle.montegoBay),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(4))),
-                    child: Row(
-                      children: [
-                        KetGlobal.spaceWidth(12),
-                        Image.asset('assets/icons/ic_search.png',
-                            width: 24, height: 24),
-                        KetGlobal.spaceWidth(7),
-                        Expanded(
-                          child: Container(
-                              margin: const EdgeInsets.only(top: 12),
-                              alignment: Alignment.center,
-                              child: TextField(
-                                controller: searchController,
-                                inputFormatters: [
-                                  LengthLimitingTextInputFormatter(20),
-                                ],
-                                decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: 'Search...',
-                                    hintStyle:
-                                        KetTextStyle.notoSansRegularColor(
-                                            16, const Color(0xffa1a7c4))),
-                                style: KetTextStyle.notoSansRegular(16),
-                                onChanged: (text) {
-                                  setState(() {
-                                    _isSearchUIVisible = text.isNotEmpty;
-                                    searchKeywords(text);
-                                  });
-                                },
-                              )),
-                        ),
-                        KetGlobal.spaceWidth(13),
-                        Visibility(
-                            visible: _isSearchUIVisible,
-                            child: GestureDetector(
+      resizeToAvoidBottomInset: false,
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: Stack(
+          children: [
+            Stack(
+              children: [
+                Positioned(
+                    child: NaverMap(
+                  onMapTapped: (NPoint point, NLatLng latLng) {
+                    FocusScope.of(context).requestFocus(FocusNode());
+                    removeSelectEmbassy();
+                  },
+                  options: const NaverMapViewOptions(
+                      locale: Locale('en'), logoAlign: NLogoAlign.leftTop),
+                  onMapReady: (controller) {
+                    _naverMapController = controller;
+                  },
+                )),
+                Container(
+                  height: 182,
+                  color: KetColorStyle.white,
+                ),
+                Visibility(
+                    visible: _isSearchUIVisible,
+                    child: Column(children: [
+                      KetGlobal.spaceHeight(156),
+                      ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: searchResultList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return GestureDetector(
                                 onTap: () {
-                                  setState(() {
-                                    searchController.clear();
-                                    _isSearchUIVisible = false;
-                                  });
+                                  onSearchItemTapped(index);
                                 },
-                                child: Image.asset('assets/icons/ic_x.png',
-                                    width: 22, height: 22))),
-                        KetGlobal.spaceWidth(13)
+                                child: Container(
+                                  color: searchResultList[index].isSelect
+                                      ? KetColorStyle.airOfMint
+                                      : KetColorStyle.white,
+                                  width: 320,
+                                  height: 44,
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 10,
+                                          bottom: 10,
+                                          left: 16,
+                                          right: 16),
+                                      child: Text(searchResultList[index].name,
+                                          style: KetTextStyle.notoSansRegular(
+                                              16))),
+                                ));
+                          })
+                    ])),
+              ],
+            ),
+            Column(children: <Widget>[
+              Container(
+                width: 320,
+                height: 50,
+                alignment: Alignment.center,
+                color: const Color(0xffFAD40F),
+                child: const Text("광고"),
+              ),
+              KetGlobal.spaceHeight(28),
+              Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 20),
+                  child: Column(children: [
+                    Row(
+                      children: [
+                        Image.asset('assets/icons/ic_embassy.png',
+                            width: 16, height: 18),
+                        KetGlobal.spaceWidth(8),
+                        Text("EMBASSY", style: KetTextStyle.notoSansBold(18.0)),
                       ],
                     ),
-                  ),
-                ]))
-          ]),
-          Visibility(
-              visible: _selectMarker != null,
-              child: Column(children: [
-                const Spacer(),
-                Padding(
-                    padding:
-                        const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-                    child: Container(
+                    KetGlobal.spaceHeight(3),
+                    Container(
                       width: MediaQuery.of(context).size.width,
-                      decoration: const BoxDecoration(
-                          color: KetColorStyle.white,
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          boxShadow: [
-                            BoxShadow(
-                              color: KetColorStyle.grayBorder,
-                              blurRadius: 4,
-                              offset: Offset(4, 8), // Shadow position
-                            ),
-                          ]),
-                      child: Column(
+                      height: 48,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: KetColorStyle.montegoBay),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(4))),
+                      child: Row(
                         children: [
-                          KetGlobal.spaceHeight(21),
-                          Row(
-                            children: [
-                              KetGlobal.spaceWidth(35),
-                              Image.asset('assets/icons/ic_embassy.png',
-                                  width: 14, height: 16),
-                              KetGlobal.spaceWidth(8),
-                              Text(_embassyModel?.name ?? "",
-                                  style: KetTextStyle.notoSansRegular(14))
-                            ],
-                          ),
-                          KetGlobal.spaceHeight(17),
-                          Row(
-                            children: [
-                              KetGlobal.spaceWidth(35),
-                              Image.asset('assets/icons/ic_call.png',
-                                  width: 14, height: 16),
-                              KetGlobal.spaceWidth(8),
-                              Text(_embassyModel?.transPhoneNumber ?? "",
-                                  style: KetTextStyle.notoSansRegular(14))
-                            ],
-                          ),
-                          KetGlobal.spaceHeight(21),
-                          GestureDetector(
-                            onTap: () async {
-                              final call = Uri.parse(
-                                  'tel:+82 ${_embassyModel?.phoneNumber}');
-                              if (await canLaunchUrl(call)) {
-                                launchUrl(call);
-                              } else {
-                                throw 'Could not launch $call';
-                              }
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  bottom: 17, left: 17, right: 17),
-                              child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: 50,
-                                decoration: const BoxDecoration(
-                                  color: KetColorStyle.montegoBay,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(12.0)),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text("CALL This Number",
-                                        style: KetTextStyle.notoSansBoldColor(
-                                            20, KetColorStyle.white)),
-                                    KetGlobal.spaceWidth(5),
-                                    Image.asset(
-                                      'assets/icons/ic_call_embassy.png',
-                                      width: 28,
-                                      height: 26,
-                                    )
+                          KetGlobal.spaceWidth(12),
+                          Image.asset('assets/icons/ic_search.png',
+                              width: 24, height: 24),
+                          KetGlobal.spaceWidth(7),
+                          Expanded(
+                            child: Container(
+                                margin: const EdgeInsets.only(top: 12),
+                                alignment: Alignment.center,
+                                child: TextField(
+                                  controller: searchController,
+                                  inputFormatters: [
+                                    LengthLimitingTextInputFormatter(20),
                                   ],
-                                ),
-                              ),
-                            ),
-                          )
+                                  decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: 'Search...',
+                                      hintStyle:
+                                          KetTextStyle.notoSansRegularColor(
+                                              16, const Color(0xffa1a7c4))),
+                                  style: KetTextStyle.notoSansRegular(16),
+                                  onChanged: (text) {
+                                    setState(() {
+                                      _isSearchUIVisible = text.isNotEmpty;
+                                      searchKeywords(text);
+                                    });
+                                  },
+                                )),
+                          ),
+                          KetGlobal.spaceWidth(13),
+                          Visibility(
+                              visible: _isSearchUIVisible,
+                              child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      searchController.clear();
+                                      _isSearchUIVisible = false;
+                                    });
+                                  },
+                                  child: Image.asset('assets/icons/ic_x.png',
+                                      width: 22, height: 22))),
+                          KetGlobal.spaceWidth(13)
                         ],
                       ),
-                    ))
-              ])),
-        ],
+                    ),
+                  ]))
+            ]),
+            Visibility(
+                visible: _selectMarker != null,
+                child: Column(children: [
+                  const Spacer(),
+                  Padding(
+                      padding: const EdgeInsets.only(
+                          left: 20, right: 20, bottom: 20),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        decoration: const BoxDecoration(
+                            color: KetColorStyle.white,
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: KetColorStyle.grayBorder,
+                                blurRadius: 4,
+                                offset: Offset(4, 8), // Shadow position
+                              ),
+                            ]),
+                        child: Column(
+                          children: [
+                            KetGlobal.spaceHeight(21),
+                            Row(
+                              children: [
+                                KetGlobal.spaceWidth(35),
+                                Image.asset('assets/icons/ic_embassy.png',
+                                    width: 14, height: 16),
+                                KetGlobal.spaceWidth(8),
+                                Container(
+                                  width: MediaQuery.of(context).size.width * 0.65,
+                                  child: Text(
+                                      _embassyModel?.name ?? "",
+                                      style: KetTextStyle.notoSansRegular(14)),
+                                )
+                              ],
+                            ),
+                            KetGlobal.spaceHeight(17),
+                            Row(
+                              children: [
+                                KetGlobal.spaceWidth(35),
+                                Image.asset('assets/icons/ic_call.png',
+                                    width: 14, height: 16),
+                                KetGlobal.spaceWidth(8),
+                                Text(_embassyModel?.transPhoneNumber ?? "",
+                                    style: KetTextStyle.notoSansRegular(14))
+                              ],
+                            ),
+                            KetGlobal.spaceHeight(21),
+                            GestureDetector(
+                              onTap: () async {
+                                final call = Uri.parse(
+                                    'tel:+82 ${_embassyModel?.phoneNumber}');
+                                if (await canLaunchUrl(call)) {
+                                  launchUrl(call);
+                                } else {
+                                  throw 'Could not launch $call';
+                                }
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    bottom: 17, left: 17, right: 17),
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 50,
+                                  decoration: const BoxDecoration(
+                                    color: KetColorStyle.montegoBay,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(12.0)),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text("CALL This Number",
+                                          style: KetTextStyle.notoSansBoldColor(
+                                              20, KetColorStyle.white)),
+                                      KetGlobal.spaceWidth(5),
+                                      Image.asset(
+                                        'assets/icons/ic_call_embassy.png',
+                                        width: 28,
+                                        height: 26,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ))
+                ])),
+          ],
+        ),
       ),
     );
   }
 
-// var List<>embassyAllList = [];
-// void getEmbassyAllList(
-//     String text, Function() onSuccess) async {
-//   var url = Uri.parse(
-//       'https://api.odcloud.kr/api/15076569/v1/uddi:7692653c-21f9-4396-b6b3-f3f0cdbe9370?page=1&perPage=255&serviceKey=FcTAw%2BPnCRMmJ0VuH0Yj37qIgrXFMN%2BHd0BNnLlKUPtbGqhAlkhR%2FdzVPwr79x%2BzV%2FmeX3Ld7Olw7jlWpQs%2Fmw%3D%3D');
-//   var client = http.Client();
-//
-//   var response = await client.get(url);
-//   if (response.statusCode == 200) {
-//     List<dynamic> data = json.decode(response.body);
-//     List<String> resultList = List<String>.from(data);
-//     searchAllList = resultList.map((s) => SearchModel(s, false)).toList();
-//     onSuccess();
-//   } else {
-//     throw Exception('Failed to load album');
-//   }
-// }
+
 }

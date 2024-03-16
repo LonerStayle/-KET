@@ -7,6 +7,7 @@ import 'package:ket/main_bottom/home.dart';
 import 'package:ket/main_bottom/restaurant.dart';
 import 'package:ket/tutorial/bus/tutorialBus.dart';
 import 'package:ket/tutorial/subway/tutorialSubWay.dart';
+import 'package:ket/tutorial/tutorialTMoneyMake.dart';
 import 'package:ket/ui_theme/KetColorStyle.dart';
 import 'package:ket/ui_theme/KetGlobal.dart';
 import 'package:ket/ui_theme/KetTextStyle.dart';
@@ -265,7 +266,7 @@ class _MainState extends State<Main> {
                               prefs.setBool('isVisibleQuestionTmoney', _isVisibleQuestionTmoney);
                               Navigator.pop(contextDialog);
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const TutorialBus()));
+                                  builder: (context) => const TutorialTMoneyMake(isFirstSpace: true,)));
                             },
                             child: Container(
                               width: 60,

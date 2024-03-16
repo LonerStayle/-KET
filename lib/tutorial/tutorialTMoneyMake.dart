@@ -3,7 +3,8 @@ import 'package:ket/ui_theme/KetGlobal.dart';
 import 'package:ket/ui_theme/KetTextStyle.dart';
 
 class TutorialTMoneyMake extends StatefulWidget {
-  const TutorialTMoneyMake({super.key});
+  final bool isFirstSpace;
+  const TutorialTMoneyMake({super.key, this.isFirstSpace = false});
 
   @override
   State<StatefulWidget> createState() => _TutorialTMoneyMakeState();
@@ -19,6 +20,11 @@ class _TutorialTMoneyMakeState extends State<TutorialTMoneyMake>{
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
+                Visibility(
+                  visible: widget.isFirstSpace,
+                  child: KetGlobal.spaceHeight(40),
+                ),
+
                 Container(
                   width: MediaQuery.of(context).size.width,
                   height: 50,

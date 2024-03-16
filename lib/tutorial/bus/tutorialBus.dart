@@ -6,7 +6,8 @@ import 'package:ket/ui_theme/KetColorStyle.dart';
 import 'package:ket/ui_theme/KetTextStyle.dart';
 
 class TutorialBus extends StatefulWidget {
-  const TutorialBus({super.key});
+  final int initialTabIndex;
+  const TutorialBus({super.key, this.initialTabIndex = 0});
 
   @override
   State<StatefulWidget> createState() => _TutorialBusState();
@@ -17,6 +18,7 @@ class _TutorialBusState extends State<TutorialBus> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: DefaultTabController(
+        initialIndex: widget.initialTabIndex,
         length: 3,
         child: Scaffold(
           appBar: PreferredSize(
@@ -31,8 +33,10 @@ class _TutorialBusState extends State<TutorialBus> {
                             topLeft: Radius.circular(10),
                             topRight: Radius.circular(10))),
                     dividerHeight: 0,
-                    labelStyle: KetTextStyle.notoSansBoldColor(14.0, KetColorStyle.black),
-                    unselectedLabelStyle: KetTextStyle.notoSansBoldColor(14.0, KetColorStyle.gray),
+                    labelStyle: KetTextStyle.notoSansBoldColor(
+                        14.0, KetColorStyle.black),
+                    unselectedLabelStyle: KetTextStyle.notoSansBoldColor(
+                        14.0, KetColorStyle.gray),
                     tabs: [
                       Container(
                           alignment: Alignment.center,
@@ -53,7 +57,7 @@ class _TutorialBusState extends State<TutorialBus> {
                           ))
                     ],
                   ))),
-          body: const TabBarView(children:[
+          body: const TabBarView(children: [
             TutorialBusTMoney(),
             TutorialBusCash(),
             TutorialTMoneyMake(),
@@ -63,4 +67,3 @@ class _TutorialBusState extends State<TutorialBus> {
     );
   }
 }
-

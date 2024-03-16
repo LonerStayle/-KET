@@ -121,7 +121,7 @@ class _HomeState extends State<Home> {
                     GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => TutorialSubWay()));
+                            builder: (context) => const TutorialSubWay()));
                       },
                       child: Container(
                         decoration: BoxDecoration(
