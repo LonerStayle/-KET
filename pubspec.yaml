@@ -145,17 +145,15 @@ flutter:
     - assets/icons/ic_home_subway_white.png
     - assets/icons/ic_home_restaurant.png
     - assets/icons/ic_naver_logo.png
-    - assets/icons/ic_home_embassy.png
+
     - assets/icons/ic_home_fab.png
     - assets/icons/ic_check_box_on.png
     - assets/icons/ic_check_box_off.png
     - assets/icons/ic_search.png
     - assets/icons/ic_x.png
     - assets/icons/ic_naver_marker.png
-    - assets/icons/ic_embassy.png
     - assets/icons/ic_warning_sky_blue.png
-    - assets/icons/ic_call.png
-    - assets/icons/ic_call_embassy.png
+
 
   # To add assets to your application, add an assets section, like this:
   # assets:

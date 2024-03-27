@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:ket/content/androidPkgName.dart';
-import 'package:ket/ui_model/SearchModel.dart';
-import 'package:ket/ui_theme/KetColorStyle.dart';
-import 'package:ket/ui_theme/KetGlobal.dart';
-import 'package:ket/ui_theme/KetTextStyle.dart';
+import 'package:ket/ui/model/SearchModel.dart';
+import 'package:ket/ui/theme/KetColorStyle.dart';
+import 'package:ket/ui/theme/KetGlobal.dart';
+import 'package:ket/ui/theme/KetTextStyle.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Restaurant extends StatefulWidget {

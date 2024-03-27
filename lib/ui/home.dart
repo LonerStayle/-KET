@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:ket/tutorial/bus/tutorialBus.dart';
-import 'package:ket/tutorial/subway/tutorialSubWay.dart';
-import 'package:ket/ui_theme/KetColorStyle.dart';
-import 'package:ket/ui_theme/KetGlobal.dart';
-import 'package:ket/ui_theme/KetTextStyle.dart';
+import 'package:ket/ui/tutorial/bus/tutorialBus.dart';
+import 'package:ket/ui/tutorial/subway/tutorialSubWay.dart';
+import 'package:ket/ui/theme/KetColorStyle.dart';
+import 'package:ket/ui/theme/KetGlobal.dart';
+import 'package:ket/ui/theme/KetTextStyle.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key, required this.mainMoveNav});

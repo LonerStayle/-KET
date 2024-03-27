@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 class EmbassyModel {
   final String name;

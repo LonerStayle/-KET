@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ket/ui_theme/KetGlobal.dart';
-import 'package:ket/ui_theme/KetTextStyle.dart';
+import 'package:ket/ui/theme/KetGlobal.dart';
+import 'package:ket/ui/theme/KetTextStyle.dart';
 
 class TutorialTMoneyMake extends StatefulWidget {
   final bool isFirstSpace;
@@ -22,15 +22,9 @@ class _TutorialTMoneyMakeState extends State<TutorialTMoneyMake>{
               children: <Widget>[
                 Visibility(
                   visible: widget.isFirstSpace,
-                  child: KetGlobal.spaceHeight(40),
+                  child: KetGlobal.spaceHeight(20),
                 ),
 
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 50,
-                  color: const Color(0xffFAD40F),
-                  child: const Text("광고"),
-                ),
                 KetGlobal.spaceHeight(20),
                 Image.asset(
                   'assets/images/img_tutorial_t_money.png',
@@ -60,13 +54,6 @@ class _TutorialTMoneyMakeState extends State<TutorialTMoneyMake>{
 
                 KetGlobal.spaceHeight(20),
 
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 50,
-                  color: const Color(0xffFAD40F),
-                  child: const Text("광고"),
-                ),
-                KetGlobal.spaceHeight(20),
                 Image.asset(
                   'assets/images/img_tutorial_t_money_make02.png',
                   width: MediaQuery.of(context).size.width,

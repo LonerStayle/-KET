@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ket/ui_theme/KetColorStyle.dart';
-import 'package:ket/ui_theme/KetTextStyle.dart';
+import 'package:ket/ui/theme/KetColorStyle.dart';
+import 'package:ket/ui/theme/KetTextStyle.dart';
 
 class KetGlobal {
   static Container spaceHeight(double height) {

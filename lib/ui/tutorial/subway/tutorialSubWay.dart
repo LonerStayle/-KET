@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:ket/tutorial/subway/tutorialSubWayCash.dart';
-import 'package:ket/tutorial/subway/tutorialSubWayTMoney.dart';
-import 'package:ket/tutorial/tutorialTMoneyMake.dart';
-import 'package:ket/ui_theme/KetColorStyle.dart';
-import 'package:ket/ui_theme/KetTextStyle.dart';
+import 'package:ket/ui/tutorial/subway/tutorialSubWayCash.dart';
+import 'package:ket/ui/tutorial/subway/tutorialSubWayTMoney.dart';
+import 'package:ket/ui/tutorial/tutorialTMoneyMake.dart';
+import 'package:ket/ui/theme/KetColorStyle.dart';
+import 'package:ket/ui/theme/KetTextStyle.dart';
 
 class TutorialSubWay extends StatefulWidget {
   final int initialTabIndex;
@@ -16,8 +16,8 @@ class TutorialSubWay extends StatefulWidget {
 class _TutorialSubWayState extends State<TutorialSubWay> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: DefaultTabController(
+    return Material(
+      child: DefaultTabController(
         initialIndex: widget.initialTabIndex,
         length: 3,
         child: Scaffold(

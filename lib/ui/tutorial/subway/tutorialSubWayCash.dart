@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ket/ui_theme/KetGlobal.dart';
-import 'package:ket/ui_theme/KetTextStyle.dart';
+import 'package:ket/ui/theme/KetGlobal.dart';
+import 'package:ket/ui/theme/KetTextStyle.dart';
 
 class TutorialSubWayCash extends StatefulWidget {
   const TutorialSubWayCash({super.key});
@@ -19,12 +19,7 @@ class _TutorialSubWayCashState extends State<TutorialSubWayCash>{
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 50,
-                  color: const Color(0xffFAD40F),
-                  child: const Text("광고"),
-                ),
+
                 KetGlobal.spaceHeight(20),
                 Image.asset(
                   'assets/images/img_tutorial_t_money.png',
@@ -59,14 +54,7 @@ class _TutorialSubWayCashState extends State<TutorialSubWayCash>{
                   textAlign: TextAlign.start,
                 ),
 
-                KetGlobal.spaceHeight(20),
 
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 50,
-                  color: const Color(0xffFAD40F),
-                  child: const Text("광고"),
-                ),
                 KetGlobal.spaceHeight(20),
                 Image.asset(
                   'assets/images/img_tutorial_sub_way_cash02.png',
@@ -155,7 +143,7 @@ class _TutorialSubWayCashState extends State<TutorialSubWayCash>{
                 ),
                 KetGlobal.spaceHeight(10),
                 Text(
-                  "Transfer spot!\nYou must use the same card when you enterd",
+                  "Transfer spot!\nYou must use the same card when you enter.",
                   style: KetTextStyle.notoSansRegular(14),
                   textAlign: TextAlign.start,
                 ),
@@ -228,7 +216,12 @@ class _TutorialSubWayCashState extends State<TutorialSubWayCash>{
                 ),
                 KetGlobal.spaceHeight(20),
 
-
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 50,
+                  color: const Color(0xffFAD40F),
+                  child: const Text("광고"),
+                ),
               ],
             )),
       ),

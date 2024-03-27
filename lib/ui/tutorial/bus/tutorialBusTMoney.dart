@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ket/ui_theme/KetGlobal.dart';
-import 'package:ket/ui_theme/KetTextStyle.dart';
+import 'package:ket/ui/theme/KetGlobal.dart';
+import 'package:ket/ui/theme/KetTextStyle.dart';
 
 class TutorialBusTMoney extends StatefulWidget {
   const TutorialBusTMoney({super.key});
@@ -19,12 +19,7 @@ class _TutorialBusTMoneyState extends State<TutorialBusTMoney>{
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 50,
-                  color: const Color(0xffFAD40F),
-                  child: const Text("광고"),
-                ),
+
                 KetGlobal.spaceHeight(20),
                 Image.asset(
                   'assets/images/img_tutorial_bus_t_money01.png',

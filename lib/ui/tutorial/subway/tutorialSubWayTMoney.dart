@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:ket/ui_theme/KetGlobal.dart';
-import 'package:ket/ui_theme/KetTextStyle.dart';
+import 'package:ket/ui/theme/KetGlobal.dart';
+import 'package:ket/ui/theme/KetTextStyle.dart';
 
-class TutorialBusCash extends StatefulWidget {
-  const TutorialBusCash({super.key});
+class TutorialSubWayTMoney extends StatefulWidget {
+  const TutorialSubWayTMoney({super.key});
 
   @override
-  State<StatefulWidget> createState() => _TutorialBusCashState();
+  State<StatefulWidget> createState() => _TutorialSubWayTMoneyState();
 }
 
-class _TutorialBusCashState extends State<TutorialBusCash>{
+class _TutorialSubWayTMoneyState extends State<TutorialSubWayTMoney> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,63 +19,61 @@ class _TutorialBusCashState extends State<TutorialBusCash>{
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 50,
-                  color: const Color(0xffFAD40F),
-                  child: const Text("광고"),
-                ),
+
                 KetGlobal.spaceHeight(20),
                 Image.asset(
-                  'assets/images/img_tutorial_t_money.png',
+                  'assets/images/img_tutorial_sub_way_t_money01.png',
                   width: MediaQuery.of(context).size.width,
                   height: 200,
                   fit: BoxFit.fill,
                 ),
-
                 KetGlobal.spaceHeight(10),
                 Text(
-                  "T-money is a transportation card that can be\nused all over the country in Korea.\nYou can use the transfer system cheeper,You can also use as credit/debit card.\n(if you buy the prepaid card type)",
+                  "Tap your card on the card readers to enter.",
                   style: KetTextStyle.notoSansRegular(14),
                   textAlign: TextAlign.start,
                 ),
                 KetGlobal.spaceHeight(30),
 
                 Image.asset(
-                  'assets/images/img_tutorial_bus_cash01.png',
+                  'assets/images/img_tutorial_sub_way_t_money02.png',
                   width: MediaQuery.of(context).size.width,
                   height: 200,
                   fit: BoxFit.fill,
                 ),
                 KetGlobal.spaceHeight(10),
                 Text(
-                  "This means what cashless bus service stared\nand also offering to use transportation cards.",
+                  "Check the balance of your T-money card!",
                   style: KetTextStyle.notoSansRegular(14),
                   textAlign: TextAlign.start,
                 ),
 
-                KetGlobal.spaceHeight(20),
-
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 50,
-                  color: const Color(0xffFAD40F),
-                  child: const Text("광고"),
-                ),
                 KetGlobal.spaceHeight(20),
                 Image.asset(
-                  'assets/images/img_tutorial_bus_cash02.png',
+                  'assets/images/img_tutorial_sub_way_t_money03.png',
                   width: MediaQuery.of(context).size.width,
                   height: 200,
                   fit: BoxFit.fill,
                 ),
                 KetGlobal.spaceHeight(10),
                 Text(
-                  "You can still pay by cash to put into the box.",
+                  "Transfer spot!\nYou must use the same card when you enterd!",
                   style: KetTextStyle.notoSansRegular(14),
                   textAlign: TextAlign.start,
                 ),
-
+                KetGlobal.spaceHeight(30),
+                Image.asset(
+                  'assets/images/img_tutorial_sub_way_t_money04.png',
+                  width: MediaQuery.of(context).size.width,
+                  height: 200,
+                  fit: BoxFit.fill,
+                ),
+                KetGlobal.spaceHeight(10),
+                Text(
+                  "Make sure to tap your T-money card!\n(There may be additional charges. But you can\nalso charge your T-money card before you get off )",
+                  style: KetTextStyle.notoSansRegular(14),
+                  textAlign: TextAlign.start,
+                ),
                 KetGlobal.spaceHeight(20),
                 Container(
                   width: MediaQuery.of(context).size.width,

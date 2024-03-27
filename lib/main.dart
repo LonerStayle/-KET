@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 import 'package:flutter_naver_map/flutter_naver_map.dart';
-import 'package:ket/main_bottom/embassy.dart';
-import 'package:ket/main_bottom/home.dart';
-import 'package:ket/main_bottom/restaurant.dart';
-import 'package:ket/tutorial/bus/tutorialBus.dart';
-import 'package:ket/tutorial/subway/tutorialSubWay.dart';
-import 'package:ket/tutorial/tutorialTMoneyMake.dart';
-import 'package:ket/ui_theme/KetColorStyle.dart';
-import 'package:ket/ui_theme/KetGlobal.dart';
-import 'package:ket/ui_theme/KetTextStyle.dart';
+import 'package:ket/ui/home.dart';
+import 'package:ket/ui/restaurant.dart';
+import 'package:ket/ui/theme/KetColorStyle.dart';
+import 'package:ket/ui/theme/KetGlobal.dart';
+import 'package:ket/ui/theme/KetTextStyle.dart';
+import 'package:ket/ui/tutorial/bus/tutorialBus.dart';
+import 'package:ket/ui/tutorial/subway/tutorialSubWay.dart';
+import 'package:ket/ui/tutorial/tutorialTMoneyMake.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
@@ -86,7 +85,6 @@ class _MainState extends State<Main> {
     _widgetOptions = <Widget>[
       const Restaurant(),
       Home(mainMoveNav:_onItemTapped),
-      const Embassy(),
     ];
   }
 
@@ -108,10 +106,6 @@ class _MainState extends State<Main> {
                 BottomNavigationBarItem(
                   icon: SizedBox.shrink(),
                   label: 'HOME',
-                ),
-                BottomNavigationBarItem(
-                  icon: SizedBox.shrink(),
-                  label: 'EMBASSY',
                 ),
               ],
               backgroundColor: KetColorStyle.airOfMint,
