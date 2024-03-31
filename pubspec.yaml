@@ -39,6 +39,7 @@ dependencies:
   flutter_share: ^2.0.0
   shared_preferences: ^2.1.0
   flutter_naver_map: ^1.1.1
+  google_mobile_ads: ^4.0.0
 
 
 dev_dependencies:
@@ -95,7 +96,12 @@ flutter:
 
   assets:
   #Image#
-    - assets/images/img_home_header.png
+    - assets/images/img_home_header01.png
+    - assets/images/img_home_header02.png
+    - assets/images/img_home_header03.png
+    - assets/images/img_home_header04.png
+
+
     - assets/images/img_t_money_logo.png
     - assets/images/img_tutorial_t_money.png
 
@@ -135,7 +141,7 @@ flutter:
     - assets/images/img_naver_map03.png
     - assets/images/img_naver_map04.png
 
-
+    - assets/images/img_app_title.png
 
 
   #Icon#
@@ -144,15 +150,15 @@ flutter:
     - assets/icons/ic_home_subway.png
     - assets/icons/ic_home_subway_white.png
     - assets/icons/ic_home_restaurant.png
-    - assets/icons/ic_naver_logo.png
+    - assets/icons/ic_home_naver_map.png
 
-    - assets/icons/ic_home_fab.png
     - assets/icons/ic_check_box_on.png
     - assets/icons/ic_check_box_off.png
     - assets/icons/ic_search.png
     - assets/icons/ic_x.png
-    - assets/icons/ic_naver_marker.png
     - assets/icons/ic_warning_sky_blue.png
+
+    - assets/icons/ic_back.png
 
 
   # To add assets to your application, add an assets section, like this:

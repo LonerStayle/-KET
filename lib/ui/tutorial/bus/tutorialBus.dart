@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ket/ui/theme/KetGlobal.dart';
 import 'package:ket/ui/tutorial/bus/tutorialBusCash.dart';
 import 'package:ket/ui/tutorial/bus/tutorialBusTMoney.dart';
 import 'package:ket/ui/tutorial/tutorialTMoneyMake.dart';
@@ -7,6 +8,7 @@ import 'package:ket/ui/theme/KetTextStyle.dart';
 
 class TutorialBus extends StatefulWidget {
   final int initialTabIndex;
+
   const TutorialBus({super.key, this.initialTabIndex = 0});
 
   @override
@@ -16,8 +18,11 @@ class TutorialBus extends StatefulWidget {
 class _TutorialBusState extends State<TutorialBus> {
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: DefaultTabController(
+    return Scaffold(
+      appBar: const PreferredSize(
+          preferredSize: Size(double.infinity, 60), child: AppTitle()),
+      body: Material(
+          child: DefaultTabController(
         initialIndex: widget.initialTabIndex,
         length: 3,
         child: Scaffold(
@@ -57,13 +62,16 @@ class _TutorialBusState extends State<TutorialBus> {
                           ))
                     ],
                   ))),
-          body: const TabBarView(children: [
-            TutorialBusTMoney(),
-            TutorialBusCash(),
-            TutorialTMoneyMake(),
-          ]),
+          body: const TabBarView(
+            children: [
+              TutorialBusTMoney(),
+              TutorialBusCash(),
+              TutorialTMoneyMake(),
+            ],
+          ),
         ),
-      ),
+      )),
     );
   }
 }
+

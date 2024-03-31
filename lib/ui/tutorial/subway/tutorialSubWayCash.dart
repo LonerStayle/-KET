@@ -1,4 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:ket/AdManager.dart';
+import 'package:ket/FullWidthBannerAd.dart';
 import 'package:ket/ui/theme/KetGlobal.dart';
 import 'package:ket/ui/theme/KetTextStyle.dart';
 
@@ -19,7 +22,10 @@ class _TutorialSubWayCashState extends State<TutorialSubWayCash>{
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-
+                FullWidthBannerAd(
+                    bannerAd: AdManager.instance.bannerAd,
+                    sidePadding: 10.0
+                ),
                 KetGlobal.spaceHeight(20),
                 Image.asset(
                   'assets/images/img_tutorial_t_money.png',
@@ -56,6 +62,12 @@ class _TutorialSubWayCashState extends State<TutorialSubWayCash>{
 
 
                 KetGlobal.spaceHeight(20),
+
+                FullWidthBannerAd(
+                    bannerAd: AdManager.instance.bannerAd,
+                    sidePadding: 10.0
+                ),
+                KetGlobal.spaceHeight(20),
                 Image.asset(
                   'assets/images/img_tutorial_sub_way_cash02.png',
                   width: MediaQuery.of(context).size.width,
@@ -82,11 +94,9 @@ class _TutorialSubWayCashState extends State<TutorialSubWayCash>{
                   textAlign: TextAlign.start,
                 ),
                 KetGlobal.spaceHeight(20),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 50,
-                  color: const Color(0xffFAD40F),
-                  child: const Text("광고"),
+                FullWidthBannerAd(
+                    bannerAd: AdManager.instance.bannerAd,
+                    sidePadding: 10.0
                 ),
                 KetGlobal.spaceHeight(20),
                 Image.asset(
@@ -115,11 +125,9 @@ class _TutorialSubWayCashState extends State<TutorialSubWayCash>{
                   textAlign: TextAlign.start,
                 ),
                 KetGlobal.spaceHeight(20),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 50,
-                  color: const Color(0xffFAD40F),
-                  child: const Text("광고"),
+                FullWidthBannerAd(
+                    bannerAd: AdManager.instance.bannerAd,
+                    sidePadding: 10.0
                 ),
                 KetGlobal.spaceHeight(20),
                 Image.asset(
@@ -149,11 +157,9 @@ class _TutorialSubWayCashState extends State<TutorialSubWayCash>{
                 ),
                 KetGlobal.spaceHeight(20),
 
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 50,
-                  color: const Color(0xffFAD40F),
-                  child: const Text("광고"),
+                FullWidthBannerAd(
+                    bannerAd: AdManager.instance.bannerAd,
+                    sidePadding: 10.0
                 ),
                 KetGlobal.spaceHeight(20),
                 Image.asset(
@@ -182,11 +188,9 @@ class _TutorialSubWayCashState extends State<TutorialSubWayCash>{
                   textAlign: TextAlign.start,
                 ),
                 KetGlobal.spaceHeight(20),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 50,
-                  color: const Color(0xffFAD40F),
-                  child: const Text("광고"),
+                FullWidthBannerAd(
+                    bannerAd: AdManager.instance.bannerAd,
+                    sidePadding: 10.0
                 ),
                 KetGlobal.spaceHeight(20),
                 Image.asset(
@@ -216,11 +220,9 @@ class _TutorialSubWayCashState extends State<TutorialSubWayCash>{
                 ),
                 KetGlobal.spaceHeight(20),
 
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 50,
-                  color: const Color(0xffFAD40F),
-                  child: const Text("광고"),
+                FullWidthBannerAd(
+                    bannerAd: AdManager.instance.bannerAd,
+                    sidePadding: 10.0
                 ),
               ],
             )),

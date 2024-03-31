@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ket/ui/theme/KetGlobal.dart';
 import 'package:ket/ui/tutorial/subway/tutorialSubWayCash.dart';
 import 'package:ket/ui/tutorial/subway/tutorialSubWayTMoney.dart';
 import 'package:ket/ui/tutorial/tutorialTMoneyMake.dart';
@@ -7,6 +8,7 @@ import 'package:ket/ui/theme/KetTextStyle.dart';
 
 class TutorialSubWay extends StatefulWidget {
   final int initialTabIndex;
+
   const TutorialSubWay({super.key, this.initialTabIndex = 0});
 
   @override
@@ -16,8 +18,11 @@ class TutorialSubWay extends StatefulWidget {
 class _TutorialSubWayState extends State<TutorialSubWay> {
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: DefaultTabController(
+    return Scaffold(
+      appBar: const PreferredSize(
+          preferredSize: Size(double.infinity, 60), child: AppTitle()),
+      body: Material(
+          child: DefaultTabController(
         initialIndex: widget.initialTabIndex,
         length: 3,
         child: Scaffold(
@@ -42,7 +47,7 @@ class _TutorialSubWayState extends State<TutorialSubWay> {
                           alignment: Alignment.center,
                           height: 50,
                           child: const Text("Subway\nby T-money",
-                          textAlign: TextAlign.center)),
+                              textAlign: TextAlign.center)),
                       Container(
                           alignment: Alignment.center,
                           height: 50,
@@ -65,7 +70,7 @@ class _TutorialSubWayState extends State<TutorialSubWay> {
             ],
           ),
         ),
-      ),
+      )),
     );
   }
 }

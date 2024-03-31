@@ -1,4 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:ket/AdManager.dart';
+import 'package:ket/FullWidthBannerAd.dart';
 import 'package:ket/ui/theme/KetGlobal.dart';
 import 'package:ket/ui/theme/KetTextStyle.dart';
 
@@ -19,7 +22,10 @@ class _TutorialBusTMoneyState extends State<TutorialBusTMoney>{
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-
+                FullWidthBannerAd(
+                    bannerAd: AdManager.instance.bannerAd,
+                    sidePadding: 10.0
+                ),
                 KetGlobal.spaceHeight(20),
                 Image.asset(
                   'assets/images/img_tutorial_bus_t_money01.png',
@@ -51,11 +57,9 @@ class _TutorialBusTMoneyState extends State<TutorialBusTMoney>{
 
                 KetGlobal.spaceHeight(20),
 
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 50,
-                  color: const Color(0xffFAD40F),
-                  child: const Text("광고"),
+                FullWidthBannerAd(
+                    bannerAd: AdManager.instance.bannerAd,
+                    sidePadding: 10.0
                 ),
                 KetGlobal.spaceHeight(20),
                 Image.asset(
@@ -73,11 +77,9 @@ class _TutorialBusTMoneyState extends State<TutorialBusTMoney>{
                 ),
 
                 KetGlobal.spaceHeight(20),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 50,
-                  color: const Color(0xffFAD40F),
-                  child: const Text("광고"),
+                FullWidthBannerAd(
+                    bannerAd: AdManager.instance.bannerAd,
+                    sidePadding: 10.0
                 ),
 
               ],

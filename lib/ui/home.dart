@@ -1,187 +1,203 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:ket/ui/tutorial/bus/tutorialBus.dart';
-import 'package:ket/ui/tutorial/subway/tutorialSubWay.dart';
+import 'package:ket/ui/restaurant.dart';
 import 'package:ket/ui/theme/KetColorStyle.dart';
 import 'package:ket/ui/theme/KetGlobal.dart';
 import 'package:ket/ui/theme/KetTextStyle.dart';
+import 'package:ket/ui/tutorial/bus/tutorialBus.dart';
+import 'package:ket/ui/tutorial/subway/tutorialSubWay.dart';
+import 'package:ket/ui/tutorial/tutorialTMoneyMake.dart';
 
 class Home extends StatefulWidget {
-  const Home({super.key, required this.mainMoveNav});
-
-  final Function(int index) mainMoveNav;
+  const Home({super.key});
 
   @override
   State<StatefulWidget> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
+  final PageController _controller = PageController(initialPage: 2100000);
+
+  List<String> headerImageList = <String>[
+    "assets/images/img_home_header01.png",
+    "assets/images/img_home_header02.png",
+    "assets/images/img_home_header03.png",
+    "assets/images/img_home_header04.png",
+  ];
+
+  int currentPage = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    Timer.periodic(const Duration(seconds: 3), (Timer timer) {
+      if(currentPage < 2100000){
+        currentPage++;
+      }else{
+        currentPage = 0;
+      }
+
+      _controller.animateToPage(
+        currentPage,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeIn,
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Stack(
-                children: [
-                  Image.asset(
-                    "assets/images/img_home_header.png",
-                    fit: BoxFit.fitWidth,
-                    width: double.infinity,
-                    height: 275,
-                  ),
-                  Column(children: [
-                    Stack(children: [
-                      Padding(
-                          padding: const EdgeInsets.only(left: 53, top: 21),
-                          child: Text(
-                            "Welcome!",
-                            style: KetTextStyle.notoSansRegular(48.0),
-                          )),
-                      Padding(
-                          padding: const EdgeInsets.only(left: 90, top: 75),
-                          child: Text(
-                            "Have a wonderful trip!",
-                            style: KetTextStyle.notoSansMedium(20.0),
-                          )),
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+              SizedBox(
+                height: 460,
+                child: PageView.builder(
+                    controller: _controller,
+                    itemBuilder: (_, index) {
+                      return SizedBox.expand(
+                          child: Stack(
+                        children: [
+                          Image.asset(
+                            headerImageList[index % 4],
+                            width: double.infinity,
+                            height: 460,
+                          ),
+                          Column(children: [
+                            Stack(children: [
+                              Padding(
+                                  padding:
+                                      const EdgeInsets.only(left: 53, top: 21),
+                                  child: Text(
+                                    "Welcome!",
+                                    style: KetTextStyle.notoSansRegular(48.0),
+                                  )),
+                              Padding(
+                                  padding:
+                                      const EdgeInsets.only(left: 90, top: 75),
+                                  child: Text(
+                                    "Have a wonderful trip!",
+                                    style: KetTextStyle.notoSansMedium(20.0),
+                                  )),
+                            ]),
+                            Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 21, top: 51),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: KetColorStyle.airOfMint
+                                        .withOpacity(0.5),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(10)),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(9),
+                                    child: Text(
+                                      "This app is for tourists\nwho have traveled to Korea to help\nwith detailed and specific guides",
+                                      style: KetTextStyle.notoSansMedium(14.0),
+                                    ),
+                                  ),
+                                ))
+                          ])
+                        ],
+                      ));
+                    }),
+              ),
+              SizedBox(
+                height: 103,
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const TutorialBus()));
+                        },
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset('assets/icons/ic_home_bus.png',
+                                  width: 47, height: 44),
+                              Text('BUS', style: KetTextStyle.notoSansBold(10))
+                            ]),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const TutorialSubWay()));
+                        },
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset('assets/icons/ic_home_subway.png',
+                                  width: 47, height: 44),
+                              Text('SUBWAY',
+                                  style: KetTextStyle.notoSansBold(10))
+                            ]),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const Restaurant()));
+                        },
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset('assets/icons/ic_home_restaurant.png',
+                                  width: 47, height: 44),
+                              Text('RESTAURANT',
+                                  style: KetTextStyle.notoSansBold(10))
+                            ]),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const TutorialTMoneyMake(
+                                  isFirstSpace: true)));
+                        },
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset('assets/icons/ic_home_t_money.png',
+                                  width: 47, height: 44),
+                              Text('T-money',
+                                  style: KetTextStyle.notoSansBold(10))
+                            ]),
+                      ),
                     ]),
-                    Padding(
-                        padding: const EdgeInsets.only(left: 21, top: 25),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: KetColorStyle.airOfMint.withOpacity(0.5),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(10)),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(9),
-                            child: Text(
-                              "This app is for tourists\nwho have traveled to Korea to help\nwith detailed and specific guides",
-                              style: KetTextStyle.notoSansMedium(14.0),
-                            ),
-                          ),
-                        ))
-                  ])
-                ],
               ),
               KetGlobal.divider(),
               Padding(
-                padding: const EdgeInsets.only(top: 20, left: 20),
-                child: Row(
-                  children: [
-                    Image.asset('assets/icons/ic_home_bus.png',
-                        width: 20, height: 18),
-                    KetGlobal.spaceWidth(8),
-                    Text("TRAFFIC", style: KetTextStyle.notoSansBold(18.0)),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10, left: 20),
+                padding: const EdgeInsets.only(top: 5, left: 30),
                 child: Text(
-                    "Check out how to use public transportation.\n(Press the button below to use it)",
-                    style: KetTextStyle.notoSansRegularColor(
-                        12.0, KetColorStyle.black.withAlpha(60))),
+                    "Do you want to have better trip?\nTry using it below!\nYou can find good restaurants like koreans.",
+                    style: KetTextStyle.notoSansRegular(15)),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 22, left: 30, right: 30),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => TutorialBus()));
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: KetColorStyle.isleRoyale,
-                            border: Border.all(
-                                width: 0.5, color: KetColorStyle.grayBorder)),
-                        width: 130,
-                        height: 130,
-                        alignment: Alignment.center,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset('assets/icons/ic_home_bus.png',
-                                width: 74, height: 74),
-                            Text(
-                              "BUS",
-                              style: KetTextStyle.notoSansBold(12.0),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    KetGlobal.spaceWidth(40),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const TutorialSubWay()));
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: KetColorStyle.isleRoyale,
-                            border: Border.all(
-                                width: 0.5, color: KetColorStyle.grayBorder)),
-                        width: 130,
-                        height: 130,
-                        alignment: Alignment.center,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset('assets/icons/ic_home_subway.png',
-                                width: 74, height: 74),
-                            Text(
-                              "SUBWAY",
-                              style: KetTextStyle.notoSansBold(12.0),
-                            )
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              KetGlobal.spaceHeight(22),
-              KetGlobal.divider(),
-              Padding(
-                padding: const EdgeInsets.only(top: 20, left: 20),
-                child: Row(
-                  children: [
-                    Image.asset('assets/icons/ic_home_restaurant.png',
-                        width: 20, height: 18),
-                    KetGlobal.spaceWidth(8),
-                    Text("RESTAURANT", style: KetTextStyle.notoSansBold(18.0)),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10, left: 20),
-                child: Text(
-                    "Check out how to find restaurants  like koreans.\nDo you want to have better trip?\nTry using it below!",
-                    style: KetTextStyle.notoSansRegularColor(
-                        12.0, KetColorStyle.black.withAlpha(60))),
-              ),
-              KetGlobal.spaceHeight(22),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Container(
-                    height: 70,
+              KetGlobal.spaceHeight(6),
+              Container(
+                alignment: Alignment.center,
+                height: 90,
+                child: Container(
+                    width: MediaQuery.of(context).size.width - 60,
                     decoration: BoxDecoration(
                       border: Border.all(color: KetColorStyle.catalan),
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
                     ),
                     child: GestureDetector(
                         onTap: () {
-                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                            content: Text("Please search for Restaurant"),
-                          ));
-                          widget.mainMoveNav(0);
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const Restaurant()));
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(
@@ -190,91 +206,26 @@ class _HomeState extends State<Home> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Image.asset(
-                                'assets/icons/ic_naver_logo.png',
+                                'assets/icons/ic_home_naver_map.png',
                                 width: 50,
                                 height: 50,
                               ),
-                              KetGlobal.spaceWidth(12),
+                              KetGlobal.spaceWidth(16),
                               Text(
                                 "Check out the hot places\non Naver Map",
-                                style: KetTextStyle.notoSansMedium(14.0),
+                                style: KetTextStyle.notoSansMedium(15),
                               ),
                             ],
                           ),
                         ))),
-              ]),
-              KetGlobal.spaceHeight(22),
-              KetGlobal.divider(),
-              KetGlobal.spaceHeight(20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("FIND YOUR EMBASSY",
-                      style: KetTextStyle.notoSansBold(18.0)),
-                ],
               ),
-              KetGlobal.spaceHeight(20),
-              Padding(
-                  padding: const EdgeInsets.only(
-                      left: 30, right: 30, top: 20, bottom: 20),
+              SizedBox(
+                  height: 80,
                   child: Container(
-                      decoration: const BoxDecoration(
-                        color: KetColorStyle.airOfMint,
-                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      ),
-                      child: Padding(
-                          padding: const EdgeInsets.only(
-                              top: 18, bottom: 20, right: 25, left: 25),
-                          child: Column(
-                            children: [
-                              Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "You’ve got any problems?\nAccess to your embassy easily\nhere!",
-                                      style: KetTextStyle.notoSansRegularColor(
-                                          12,
-                                          KetColorStyle.black.withOpacity(0.6)),
-                                    ),
-                                    KetGlobal.spaceWidth(34),
-                                    Image.asset(
-                                      'assets/icons/ic_home_embassy.png',
-                                      width: 56,
-                                      height: 56,
-                                    ),
-                                  ]),
-                              KetGlobal.spaceHeight(11),
-                              GestureDetector(
-                                  onTap: () {
-                                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                                      content: Text("Please search for Embassy"),
-                                    ));
-                                    widget.mainMoveNav(2);
-                                  },
-                                  child: Container(
-                                    width: double.infinity,
-                                    height: 54,
-                                    decoration: BoxDecoration(
-                                      color: KetColorStyle.catalan,
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          "Find",
-                                          style: KetTextStyle.notoSansBoldColor(
-                                              18.0, KetColorStyle.white),
-                                        )
-                                      ],
-                                    ),
-                                  ))
-                            ],
-                          )))),
-            ],
-          ),
-        ),
+                      alignment: Alignment.center,
+                      child: Image.asset('assets/images/img_app_title.png',
+                          width: 57, height: 38))),
+            ])),
       ),
     );
   }

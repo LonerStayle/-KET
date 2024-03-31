@@ -21,7 +21,6 @@ class KetCheckbox extends StatefulWidget {
   const KetCheckbox({Key? key, required this.setChecked}) : super(key: key);
   final Function(bool) setChecked;
 
-
   @override
   State<KetCheckbox> createState() => _KetCheckboxState();
 }
@@ -32,7 +31,7 @@ class _KetCheckboxState extends State<KetCheckbox> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         setState(() {
           _isChecked = !_isChecked;
           widget.setChecked(_isChecked);
@@ -56,5 +55,36 @@ class _KetCheckboxState extends State<KetCheckbox> {
         ],
       ),
     );
+  }
+}
+
+class AppTitle extends StatefulWidget {
+  const AppTitle({super.key});
+
+  @override
+  State<AppTitle> createState() => _AppTitleState();
+}
+
+class _AppTitleState extends State<AppTitle> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+        padding: const EdgeInsets.only(left: 15, top: 11, right: 15, bottom: 11),
+        child: Stack(children: [
+          Container(
+              alignment: Alignment.centerLeft,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Image.asset('assets/icons/ic_back.png',
+                    width: 30, height: 30),
+              )),
+          Container(
+              alignment: Alignment.center,
+              width: MediaQuery.of(context).size.width,
+              child: Image.asset('assets/images/img_app_title.png',
+                  width: 57, height: 38))
+        ]));
   }
 }
