@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:ket/AdManager.dart';
@@ -35,7 +35,7 @@ class _TutorialTMoneyMakeState extends State<TutorialTMoneyMake> {
                   ])
                 ),
                 FullWidthBannerAd(
-                    bannerAd: AdManager.instance.bannerAd,
+                    bannerAd: AdManager(1).bannerAd,
                     sidePadding: 10.0
                 ),
                 KetGlobal.spaceHeight(20),
@@ -90,7 +90,7 @@ class _TutorialTMoneyMakeState extends State<TutorialTMoneyMake> {
                 ),
                 KetGlobal.spaceHeight(20),
                 FullWidthBannerAd(
-                    bannerAd: AdManager.instance.bannerAd,
+                    bannerAd: AdManager(2).bannerAd,
                     sidePadding: 10.0
                 ),
                 KetGlobal.spaceHeight(20),
@@ -121,7 +121,7 @@ class _TutorialTMoneyMakeState extends State<TutorialTMoneyMake> {
                 ),
                 KetGlobal.spaceHeight(20),
                 FullWidthBannerAd(
-                    bannerAd: AdManager.instance.bannerAd,
+                    bannerAd: AdManager(3).bannerAd,
                     sidePadding: 10.0
                 ),
               ],

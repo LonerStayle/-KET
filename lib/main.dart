@@ -9,7 +9,6 @@ import 'package:ket/ui/theme/KetColorStyle.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  AdManager.instance.init(targetPlatform: defaultTargetPlatform);
   runApp(const MyApp());
   initNaverMap();
 }

@@ -24,7 +24,7 @@ class _TutorialSubWayTMoneyState extends State<TutorialSubWayTMoney> {
               children: <Widget>[
 
                 FullWidthBannerAd(
-                    bannerAd: AdManager.instance.bannerAd,
+                    bannerAd: AdManager(1).bannerAd,
                     sidePadding: 10.0
                 ),
                 KetGlobal.spaceHeight(20),
@@ -57,7 +57,7 @@ class _TutorialSubWayTMoneyState extends State<TutorialSubWayTMoney> {
 
                 KetGlobal.spaceHeight(20),
                 FullWidthBannerAd(
-                    bannerAd: AdManager.instance.bannerAd,
+                    bannerAd: AdManager(2).bannerAd,
                     sidePadding: 10.0
                 ),
                 KetGlobal.spaceHeight(20),
@@ -88,7 +88,7 @@ class _TutorialSubWayTMoneyState extends State<TutorialSubWayTMoney> {
                 ),
                 KetGlobal.spaceHeight(20),
                 FullWidthBannerAd(
-                    bannerAd: AdManager.instance.bannerAd,
+                    bannerAd: AdManager(3).bannerAd,
                     sidePadding: 10.0
                 ),
 

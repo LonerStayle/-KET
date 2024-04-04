@@ -26,13 +26,4 @@ class _FullWidthBannerAdState extends State<FullWidthBannerAd> {
   }
 }
 
-Widget bannerAdWidget(AdManagerBannerAd bannerAd, double sidePadding) {
-  return StatefulBuilder(
-    builder: (context, setState) => Container(
-      child: FullWidthBannerAd(
-        bannerAd: bannerAd,
-        sidePadding: sidePadding,
-      ),
-    ),
-  );
-}
+

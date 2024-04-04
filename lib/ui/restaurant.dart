@@ -74,7 +74,7 @@ class _RestaurantState extends State<Restaurant> {
               child: Column(
                 children: <Widget>[
                   FullWidthBannerAd(
-                      bannerAd: AdManager.instance.bannerAd,
+                      bannerAd: AdManager(1).bannerAd,
                       sidePadding: 10.0
                   ),
                   KetGlobal.spaceHeight(28),

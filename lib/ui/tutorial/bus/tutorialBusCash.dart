@@ -22,10 +22,8 @@ class _TutorialBusCashState extends State<TutorialBusCash>{
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-
-
                 FullWidthBannerAd(
-                    bannerAd: AdManager.instance.bannerAd,
+                    bannerAd: AdManager(1).bannerAd,
                     sidePadding: 10.0
                 ),
 
@@ -61,7 +59,7 @@ class _TutorialBusCashState extends State<TutorialBusCash>{
                 KetGlobal.spaceHeight(20),
 
                 FullWidthBannerAd(
-                    bannerAd: AdManager.instance.bannerAd,
+                    bannerAd: AdManager(2).bannerAd,
                     sidePadding: 10.0
                 ),
                 KetGlobal.spaceHeight(20),
@@ -80,7 +78,7 @@ class _TutorialBusCashState extends State<TutorialBusCash>{
 
                 KetGlobal.spaceHeight(20),
                 FullWidthBannerAd(
-                    bannerAd: AdManager.instance.bannerAd,
+                    bannerAd: AdManager(3).bannerAd,
                     sidePadding: 10.0
                 ),
 
