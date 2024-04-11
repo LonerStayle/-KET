@@ -159,6 +159,7 @@ flutter:
     - assets/icons/ic_warning_sky_blue.png
 
     - assets/icons/ic_back.png
+    - assets/icons/ic_home_t_money.png
 
 
   # To add assets to your application, add an assets section, like this:

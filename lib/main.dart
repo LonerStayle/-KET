@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:ket/AdManager.dart';
 import 'package:ket/ui/home.dart';
@@ -41,9 +42,12 @@ class _MainState extends State<Main> {
   @override
   void initState() {
     super.initState();
+
     Future.delayed(const Duration(seconds: 1), () {
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const Home()));
+
+
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+          builder: (context) => const Home()), (route) => false);
     });
   }
 
