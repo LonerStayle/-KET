@@ -69,7 +69,7 @@ class _AppTitleState extends State<AppTitle> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.only(left: 15, top: 11, right: 15, bottom: 11),
+        padding: const EdgeInsets.only(left: 15, top: 32, right: 15, bottom: 11),
         child: Stack(children: [
           Container(
               alignment: Alignment.centerLeft,

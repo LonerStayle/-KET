@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:ket/ui/restaurant.dart';
@@ -18,7 +19,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final PageController _controller = PageController(initialPage: 2100000);
+  final PageController _controller = PageController(initialPage: 210000000~/2,keepPage: false);
 
   bool get isiOS =>
       foundation.defaultTargetPlatform == foundation.TargetPlatform.iOS;
@@ -30,18 +31,18 @@ class _HomeState extends State<Home> {
     "assets/images/img_home_header04.png",
   ];
 
-  int currentPage = 0;
+  int currentPage = 210000000~/2;
 
   @override
   void initState() {
     super.initState();
     Timer.periodic(const Duration(seconds: 3), (Timer timer) {
-      if (currentPage < 2100000) {
-        currentPage++;
-      } else {
-        currentPage = 0;
-      }
 
+      if(currentPage == _controller.page){
+        currentPage++;
+      }else{
+        currentPage = (_controller.page?.toInt()??0)+1;
+      }
       _controller.animateToPage(
         currentPage,
         duration: const Duration(milliseconds: 300),

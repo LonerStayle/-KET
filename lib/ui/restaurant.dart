@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -13,6 +13,7 @@ import 'package:ket/ui/theme/KetColorStyle.dart';
 import 'package:ket/ui/theme/KetGlobal.dart';
 import 'package:ket/ui/theme/KetTextStyle.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class Restaurant extends StatefulWidget {
   const Restaurant({super.key});
@@ -315,29 +316,28 @@ class _RestaurantState extends State<Restaurant> {
   Future<void> openApp(int index) async {
     // TranslationResponse transResult = await getTranslateEN(searchResultList[index].keyword);
     String transResult = searchResultList[index].keyword;
+    final info = await PackageInfo.fromPlatform();
     if (Platform.isAndroid) {
       await canLaunchUrl(
         Uri.parse(
-            "nmap://search?query=$transResult&appname=${PkgName.NaverMap}"),
+            "nmap://search?query=$transResult&appname=${info.packageName}"),
       )
           ? await launchUrl(
         Uri.parse(
-            "nmap://search?query=$transResult&appname=${PkgName.NaverMap}"),
+            "nmap://search?query=$transResult&appname=${info.packageName}"),
       )
           : await launchUrl(
         Uri.parse(
-            "https://play.google.com/store/apps/details?id=${PkgName
-                .NaverMap}"),
+            "https://play.google.com/store/apps/details?id=${PkgName.NaverMap}"),
       );
     } else if (Platform.isIOS) {
       await canLaunchUrl(
         Uri.parse(
-            "nmap://actionPath?appname=Ket&search=$transResult"),
+            "nmap://search?query=$transResult&appname=${info.packageName}"),
       )
-      //if we can launch the url then open the app
           ? await launchUrl(
         Uri.parse(
-            "nmap://actionPath?appname=Ket&search=$transResult"),
+            "nmap://search?query=$transResult&appname=${info.packageName}"),
       )
       //if we cannot, then open a link to the playstore so the user downloads the app
           : await launchUrl(
