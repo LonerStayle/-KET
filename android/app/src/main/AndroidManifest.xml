@@ -1,8 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
-    <!-- Provide required visibility configuration for API level 30 and above -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <queries>
+        <package android:name="com.nhn.android.nmap" />
+
         <intent>
             <action android:name="android.intent.action.VIEW" />
             <data android:scheme="sms" />
@@ -15,7 +16,7 @@
 
         <intent>
             <action android:name="android.intent.action.VIEW" />
-            <category android:name="android.intent.category.BROWSABLE"/>
+            <category android:name="android.intent.category.BROWSABLE" />
             <data android:scheme="https" />
         </intent>
 
@@ -62,9 +63,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="io.flutter.plugins.urllauncher.WebViewActivity"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:exported="false"/>
+        <activity
+            android:name="io.flutter.plugins.urllauncher.WebViewActivity"
+            android:exported="false"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
 
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
@@ -74,7 +76,7 @@
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-6258051451663316~8556338716"/>
+            android:value="ca-app-pub-6258051451663316~8556338716" />
 
     </application>
 </manifest>
